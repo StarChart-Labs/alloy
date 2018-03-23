@@ -6,9 +6,9 @@ Alloy was heavily inspired by the Google Guava libraries, and replicates some of
 
 There are a couple issues with using Guava in certain environments that led to the creation of Alloy
 
-# Guava contains a large amount of utility that is now built into the Java language since Java 8. As a large amount of its code was based upon the Guava-specific contracts, it is very difficult for Guava to safely remove these now-duplicate elements
-# Partially because of the above, Guava is a sizable library, not suitable for specifically size-sensitive applications. Aside from this, there are organization routes that could be taken to further reduce size by a new library
-# Guava uses a somewhat non-standard approach to API designations - Beta tags indicate functionality should be used with caution, and Deprecated tags are not used often, and Deprecated APIs are rarely removed, even across major versions. While there are advantages to this approach, it leads to a build-up of "dead" APIs, especially those assimilated into Java as of Java 8
+- Guava contains a large amount of utility that is now built into the Java language since Java 8. As a large amount of its code was based upon the Guava-specific contracts, it is very difficult for Guava to safely remove these now-duplicate elements
+- Partially because of the above, Guava is a sizable library, not suitable for specifically size-sensitive applications. Aside from this, there are organization routes that could be taken to further reduce size by a new library
+- Guava uses a somewhat non-standard approach to API designations - Beta tags indicate functionality should be used with caution, and Deprecated tags are not used often, and Deprecated APIs are rarely removed, even across major versions. While there are advantages to this approach, it leads to a build-up of "dead" APIs, especially those assimilated into Java as of Java 8
 
 Alloy intends to create a stripped-down post-Java-8 version of these utilities which uses a more traditional approach to deprecation and removal. To address some of the above, Alloy intends to
 
