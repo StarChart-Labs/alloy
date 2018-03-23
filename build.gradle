@@ -1,0 +1,61 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+    dependencies {
+        classpath group: 'com.netflix.nebula', name: 'nebula-dependency-recommender', version: '5.1.0'
+        classpath group: 'com.netflix.nebula', name: 'nebula-publishing-plugin', version: '5.1.0'
+        classpath group: 'org.starchartlabs.flare', name: 'flare-operations-plugins', version: '0.1.0'
+        classpath group: 'org.starchartlabs.flare', name: 'flare-publishing-plugins', version: '0.2.0'
+    }
+}
+
+apply plugin: 'org.starchartlabs.flare.merge-coverage-reports'
+
+allprojects{
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'jacoco'
+    apply plugin: 'nebula.dependency-recommender'
+    apply plugin: 'nebula.maven-resolved-dependencies'
+    apply plugin: 'org.starchartlabs.flare.dependency-insight'
+
+    dependencyRecommendations {
+        propertiesFile file: file("${rootDir}/dependencies.properties")
+	}
+
+    group = 'org.starchartlabs.tempest'
+
+    sourceCompatibility = "${javaVersion}"
+
+    //Always download sources, to allow debugging, and use Eclipse containers for greater portability
+    eclipse {
+        classpath {
+            downloadSources=true
+            containers = [ "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-${sourceCompatibility}".toString() ]
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+}
+
+subprojects{
+    apply plugin: 'maven'
+    apply plugin: 'org.starchartlabs.flare.increase-test-logging'
+    apply plugin: 'org.starchartlabs.flare.source-jars'
+
+    //Setup default test behavior, including failure logging
+    test {
+        useTestNG() {
+            useDefaultListeners = true
+        }
+    }
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "${gradleVersion}"
+}
