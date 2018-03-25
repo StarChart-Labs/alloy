@@ -1,5 +1,7 @@
 # Alloy
 
+[![Travis CI](https://img.shields.io/travis/StarChart-Labs/alloy.svg?branch=master)](https://travis-ci.org/StarChart-Labs/alloy)
+
 General Java utilities and quality of life tools
 
 Alloy is intended to help streamline use of common Java patterns, and reduce boilerplate code
