@@ -1,6 +1,6 @@
 # Alloy
 
-[![Travis CI](https://img.shields.io/travis/StarChart-Labs/alloy.svg?branch=master)](https://travis-ci.org/StarChart-Labs/alloy)
+[![Travis CI](https://img.shields.io/travis/StarChart-Labs/alloy.svg?branch=master)](https://travis-ci.org/StarChart-Labs/alloy) [![Code Coverage](https://img.shields.io/codecov/c/github/StarChart-Labs/alloy.svg)](https://codecov.io/github/StarChart-Labs/alloy)
 
 General Java utilities and quality of life tools
 
