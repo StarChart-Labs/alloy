@@ -1,6 +1,7 @@
 # Alloy
 
-[![Travis CI](https://img.shields.io/travis/StarChart-Labs/alloy.svg?branch=master)](https://travis-ci.org/StarChart-Labs/alloy) [![Code Coverage](https://img.shields.io/codecov/c/github/StarChart-Labs/alloy.svg)](https://codecov.io/github/StarChart-Labs/alloy)
+[![Travis CI](https://img.shields.io/travis/StarChart-Labs/alloy.svg?branch=master)](https://travis-ci.org/StarChart-Labs/alloy) [![Code Coverage](https://img.shields.io/codecov/c/github/StarChart-Labs/alloy.svg)](https://codecov.io/github/StarChart-Labs/alloy) [![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/StarChart-Labs/alloy/branches/master/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/StarChart-Labs/alloy/branches/master) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 
 General Java utilities and quality of life tools
 
