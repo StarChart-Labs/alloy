@@ -13,11 +13,11 @@ Alloy is intended to help streamline use of common Java patterns, and reduce boi
 
 ## Contributing
 
-Information for how to contribute to Lockdown can be found in [the contribution guidelines](./doc/CONTRIBUTING.md)
+Information for how to contribute to Alloy can be found in [the contribution guidelines](./doc/CONTRIBUTING.md)
 
 ## Legal
 
-Lockdown is distributed under the [MIT License](https://opensource.org/licenses/MIT). There are no requirements for using it in your own project (a line in a NOTICES file is appreciated but not necessary for use)
+Alloy is distributed under the [MIT License](https://opensource.org/licenses/MIT). There are no requirements for using it in your own project (a line in a NOTICES file is appreciated but not necessary for use)
 
 The requirement for a copy of the license being included in distributions is fulfilled by a copy of the [LICENSE](./LICENSE) file being included in constructed JAR archives
 
