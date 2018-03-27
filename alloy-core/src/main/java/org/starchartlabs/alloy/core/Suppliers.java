@@ -232,7 +232,7 @@ public final class Suppliers {
 
             initialized = false;
 
-            Preconditions.checkArgument(duration <= 0, "Expiration duration must be greater than 0");
+            Preconditions.checkArgument(duration > 0, "Expiration duration must be greater than 0");
         }
 
         @Override
