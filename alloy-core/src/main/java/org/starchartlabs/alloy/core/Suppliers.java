@@ -1,12 +1,8 @@
 /*
- * Copyright (c) Mar 22, 2018 StarChart Labs Authors.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * Copyright (C) 2018 StarChart-Labs@github.com Authors
  *
- * Contributors:
- *    romeara - initial API and implementation and/or initial documentation
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
  *
  * Parts of individual Supplier-implementing classes are heavily based on Guava's Suppliers class, and fall under their Apache 2.0 copyright:
  *
@@ -236,10 +232,7 @@ public final class Suppliers {
 
             initialized = false;
 
-            // TODO romeara Use Preconditions when available in the library
-            if (duration <= 0) {
-                throw new IllegalArgumentException();
-            }
+            Preconditions.checkArgument(duration <= 0, "Expiration duration must be greater than 0");
         }
 
         @Override
