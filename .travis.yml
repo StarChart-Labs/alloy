@@ -8,6 +8,7 @@ before_install:
   
 after_success:
   - codecov
+  - bash <(curl -s https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
   
 notifications:
   email:
