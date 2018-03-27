@@ -5,7 +5,7 @@
 * [Contributing](#contributing)
 * [Legal](#legal)
 * [Reporting Vulnerabilities](#reporting-vulnerabilities)
-* [This Looks a Lot Like Guava...](#this-looks-a-lot-like-guava...)
+* [This Looks a Lot Like Guava...](#this-looks-a-lot-like-guava)
 
 General Java utilities and quality of life tools
 
