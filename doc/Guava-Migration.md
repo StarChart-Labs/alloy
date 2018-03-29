@@ -41,7 +41,7 @@ Many of the utilities provided by Alloy are intended to take the place of simila
 ### Updated APIs
 
 - Guava Preconditions.checkArgument with message formatting
-  - Instead of the large number of Guava methods for built-in message formatting, Alloy separates out the formatting concerns using Java's Supplier via Alloy Preconditions.checkArgument(boolean, Supplier<String>). Alloy may in the future supply a String.format with similar performance to the removed in-built Guava message formatting
+  - Instead of the large number of Guava methods for built-in message formatting, Alloy separates out the formatting concerns using Java's Supplier via Alloy Preconditions.checkArgument(boolean, Supplier<String>). Alloy also supplies Strings.format, which replicate's Guava's Preconditions formatting behavior and performance characteristics, and can be used via lambda as a supplier
   - Affected Guava Preconditions.checkArgument methods:
     - Preconditions.checkArgument(boolean, String, Object...)
     - Preconditions.checkArgument(boolean, String, char)
@@ -68,7 +68,7 @@ Many of the utilities provided by Alloy are intended to take the place of simila
     - Preconditions.checkArgument(boolean, String, Object, Object, Object, Object)
 
 - Guava Preconditions.checkState with message formatting
-  - Instead of the large number of Guava methods for built-in message formatting, Alloy separates out the formatting concerns using Java's Supplier via Alloy Preconditions.checkState(boolean, Supplier<String>). Alloy may in the future supply a String.format with similar performance to the removed in-built Guava message formatting
+  - Instead of the large number of Guava methods for built-in message formatting, Alloy separates out the formatting concerns using Java's Supplier via Alloy Preconditions.checkState(boolean, Supplier<String>). Alloy also supplies Strings.format, which replicate's Guava's Preconditions formatting behavior and performance characteristics, and can be used via lambda as a supplier
   - Affected Guava Preconditions.checkState methods:
     - Preconditions.checkState(boolean, String, Object...)
     - Preconditions.checkState(boolean, String, char)
@@ -135,3 +135,19 @@ Guava Precondtions also provides some element index checking, however there does
   - Preconditions.checkPositionIndex(int, int)
   - Preconditions.checkPositionIndex(int, int, String)
   - Preconditions.checkPositionIndexes(int, int, int)
+  
+ ## Strings
+
+- Guava: com.google.common.base.Strings
+- Alloy: org.starchartlabs.alloy.core.Strings
+
+### Unchanged APIs
+
+- Strings.nullToEmpty(String)
+- Strings.emptyToNull(String)
+- Strings.isNullOrEmpty(String)
+- Strings.padStart(String, int, char)
+- Strings.padEnd(String, int, char)
+- Strings.repeat(String, int)
+- Strings.commonPrefix(CharSequence, CharSequence)
+- Strings.commonSuffix(CharSequence, CharSequence)
