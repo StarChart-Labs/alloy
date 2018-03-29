@@ -1,10 +1,29 @@
 # Alloy
 
-[![Travis CI](https://img.shields.io/travis/StarChart-Labs/alloy.svg?branch=master)](https://travis-ci.org/StarChart-Labs/alloy) [![Code Coverage](https://img.shields.io/codecov/c/github/StarChart-Labs/alloy.svg)](https://codecov.io/github/StarChart-Labs/alloy)
+[![Travis CI](https://img.shields.io/travis/StarChart-Labs/alloy.svg?branch=master)](https://travis-ci.org/StarChart-Labs/alloy) [![Code Coverage](https://img.shields.io/codecov/c/github/StarChart-Labs/alloy.svg)](https://codecov.io/github/StarChart-Labs/alloy) [![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/StarChart-Labs/alloy/branches/master/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/StarChart-Labs/alloy/branches/master) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+* [Contributing](#contributing)
+* [Legal](#legal)
+* [Reporting Vulnerabilities](#reporting-vulnerabilities)
+* [This Looks a Lot Like Guava...](#this-looks-a-lot-like-guava)
 
 General Java utilities and quality of life tools
 
 Alloy is intended to help streamline use of common Java patterns, and reduce boilerplate code
+
+## Contributing
+
+Information for how to contribute to Alloy can be found in [the contribution guidelines](./doc/CONTRIBUTING.md)
+
+## Legal
+
+Alloy is distributed under the [MIT License](https://opensource.org/licenses/MIT). There are no requirements for using it in your own project (a line in a NOTICES file is appreciated but not necessary for use)
+
+The requirement for a copy of the license being included in distributions is fulfilled by a copy of the [LICENSE](./LICENSE) file being included in constructed JAR archives
+
+## Reporting Vulnerabilities
+
+If you discover a security vulnerability, contact the development team by e-mail at `vulnerabilities@starchartlabs.org`
 
 ## This Looks a Lot Like Guava...
 
@@ -20,6 +39,6 @@ Alloy intends, in part, to create a stripped-down post-Java-8 version of these u
 
 - Deprecate and eventually remove replaced APIs, which will be more readily visible as issues to be addressed - most modern IDEs mark use of deprecated APIs as a warning automatically
 - Split related sets of functionality into separate artifacts - this will allow consumers to more precisely choose what functionality they need, instead of pulling a large library in, or having to shade the library to reduce size
-- Upgrade the minimum version of Java following the LTS path - as new LTW versions of Java become available, the minimum version will advance after a reasonable time
+- Upgrade the minimum version of Java following the LTS path - as new LTS versions of Java become available, the minimum version will advance after a reasonable time
 
-We may find that these annoyances are not work trying to create a new library - that's the nature of experimenting and trying things. In that case, we'll simply archive this project and continue to the next thing. Our hope is that these improvments will be significant enough to justify switching for us and others.
+We may find that these annoyances are not worth trying to create and drive adoption of a new library - that's the nature of experimenting and trying things. In that case, we'll simply archive this project and continue to the next thing. Our hope is that these improvments will be significant enough to justify switching for us and others, and we welcome any feedback or suggestions from the community - the easier way to provide this is currently the issue tracker.
