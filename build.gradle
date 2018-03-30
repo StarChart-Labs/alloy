@@ -24,8 +24,6 @@ allprojects{
         propertiesFile file: file("${rootDir}/dependencies.properties")
 	}
 
-    group = 'org.starchartlabs.tempest'
-
     sourceCompatibility = "${javaVersion}"
 
     //Always download sources, to allow debugging, and use Eclipse containers for greater portability
@@ -53,6 +51,13 @@ subprojects{
             useDefaultListeners = true
         }
     }
+    
+    //Apply module naming to all projects
+    jar {
+		manifest {
+			attributes("Automatic-Module-Name": "${project.group}.${project.name  - 'alloy-'}".replaceAll("-", "."))
+		}
+	}
 
 }
 
