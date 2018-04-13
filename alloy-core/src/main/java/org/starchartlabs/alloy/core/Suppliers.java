@@ -48,6 +48,10 @@ public final class Suppliers {
      * to a new representation. Note that the resulting supplier will not call {@code supplier} or invoke
      * {@code function} until it is called
      *
+     * @param <S>
+     *            Original representation provided via supplier
+     * @param <T>
+     *            Representation to convert the original to when requested via {@link Supplier#get}
      * @param supplier
      *            Supplier which provides an initial value
      * @param function
@@ -68,6 +72,8 @@ public final class Suppliers {
      * The returned supplier is thread-safe. The delegate's {@code get()} method will be invoked at most once unless the
      * underlying {@code get()} throws an exception
      *
+     * @param <T>
+     *            Representation supplied by the provided and memoized supplier
      * @param delegate
      *            Supplier which will provide values when a valid cached value has not been stored
      * @return A supplier which caches the instance retrieved during the first call to {@code get()} and returns that
@@ -86,6 +92,8 @@ public final class Suppliers {
      * <p>
      * The returned supplier is thread-safe
      *
+     * @param <T>
+     *            Representation supplied by the provided and memoized supplier
      * @param delegate
      *            Supplier which will provide values when a valid cached value has not been stored or has expired
      * @param duration
@@ -104,6 +112,8 @@ public final class Suppliers {
     }
 
     /**
+     * @param <T>
+     *            Representation supplied by the provided and synchronized supplier
      * @param delegate
      *            Supplier to create a thread-safe wrapper around
      * @return A supplier which synchronizes on the {@code delegate} before calling its {@code get} method, making it
