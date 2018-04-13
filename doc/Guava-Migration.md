@@ -2,6 +2,20 @@
 
 Many of the utilities provided by Alloy are intended to take the place of similar functionality in the Guava library. This guide will assist in making necessary changes to convert from Guava to Alloy
 
+## Joiner
+
+- Guava: com.google.common.base.Joiner
+
+### Removed APIs
+
+Joiner has not been implemented, as the same functionality exists via streams, filtering, and collectors within Java 8. An example of the Java methodology when joining values, skipping nulls, would be:
+
+```
+String joined = values.stream()
+                   .filter(Objects::nonNull)
+                   .collect(Collectors.joining(","));
+```
+
 ## Suppliers
 
 - Guava: com.google.common.base.Suppliers
