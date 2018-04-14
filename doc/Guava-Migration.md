@@ -2,6 +2,14 @@
 
 Many of the utilities provided by Alloy are intended to take the place of similar functionality in the Guava library. This guide will assist in making necessary changes to convert from Guava to Alloy
 
+## Charsets
+
+- Guava: com.google.common.base.Charsets
+
+### Removed APIs
+
+Charsets has not been implemented, as all values it presented are now provided within Java by java.nio.charset.StandardCharsets
+
 ## Joiner
 
 - Guava: com.google.common.base.Joiner
