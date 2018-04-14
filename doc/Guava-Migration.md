@@ -16,29 +16,6 @@ String joined = values.stream()
                    .collect(Collectors.joining(","));
 ```
 
-## Suppliers
-
-- Guava: com.google.common.base.Suppliers
-- Alloy: org.starchartlabs.alloy.core.Suppliers
-
-### Unchanged APIs
-
-- Suppliers.memoize(Supplier)
-- Suppliers.memoizeWithExpiration(Supplier, long, TimeUnit)
-- Suppliers.synchronizedSupplier(Supplier)
-
-### Updated APIs
-
-- Guava Suppliers.compose(Function, Supplier)
-  - In Alloy, this is presented as Suppliers.map(Supplier, Function) to better match the naming of similar operations in the Java language and reflect the chaining of elements that occurs
-
-### Removed APIs
-
-- Suppliers.ofInstance(T)
-  - As of Java 8, lambdas allow easier providing of implementations. In place of providing Suppliers.ofInstance(T), instead use the lambda form `() -> T`
-- Suppliers.supplierFunction()
-  - As of Java 8, a supplier's `get` function can be referenced for use in a lambda. Use `Supplier::get` instead
-  
 ## Preconditions
 
 - Guava: com.google.common.base.Preconditions
@@ -141,7 +118,7 @@ String joined = values.stream()
 
 ### Unimplemented APIs
 
-Guava Precondtions also provides some element index checking, however there does not appear to be a general use case for these. Issues/Pull requests accompanied by supporting arguments on why these are not overly-specialized are welcome
+Guava Preconditions also provides some element index checking, however there does not appear to be a general use case for these. Issues/Pull requests accompanied by supporting arguments on why these are not overly-specialized are welcome
 
 - Affected Guava Preconditions.checkNotNull methods
   - Preconditions.checkElementIndex(int, int)
@@ -165,3 +142,27 @@ Guava Precondtions also provides some element index checking, however there does
 - Strings.repeat(String, int)
 - Strings.commonPrefix(CharSequence, CharSequence)
 - Strings.commonSuffix(CharSequence, CharSequence)
+
+## Suppliers
+
+- Guava: com.google.common.base.Suppliers
+- Alloy: org.starchartlabs.alloy.core.Suppliers
+
+### Unchanged APIs
+
+- Suppliers.memoize(Supplier)
+- Suppliers.memoizeWithExpiration(Supplier, long, TimeUnit)
+- Suppliers.synchronizedSupplier(Supplier)
+
+### Updated APIs
+
+- Guava Suppliers.compose(Function, Supplier)
+  - In Alloy, this is presented as Suppliers.map(Supplier, Function) to better match the naming of similar operations in the Java language and reflect the chaining of elements that occurs
+
+### Removed APIs
+
+- Suppliers.ofInstance(T)
+  - As of Java 8, lambdas allow easier providing of implementations. In place of providing Suppliers.ofInstance(T), instead use the lambda form `() -> T`
+- Suppliers.supplierFunction()
+  - As of Java 8, a supplier's `get` function can be referenced for use in a lambda. Use `Supplier::get` instead
+  
