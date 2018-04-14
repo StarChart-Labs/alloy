@@ -10,6 +10,31 @@ Many of the utilities provided by Alloy are intended to take the place of simila
 
 Charsets has not been implemented, as all values it presented are now provided within Java by java.nio.charset.StandardCharsets
 
+## Functions
+
+- Guava: com.google.common.base.Functions
+
+### Removed APIs
+
+Functions has been replaced by Java's lambda functionality, and has not been implemented
+
+- Functions.compose(Function<B, C>, Function<A, ? extends B>)
+  - Replaced by java.util.function.Function.andThen(Function<? super R, ? extends V>) or java.util.function.Function.andThen(Function<? super V, ? extends T>)
+- Functions.constant(E)
+  - Replaced by lambda `input -> constant`
+- Functions.forMap(Map<K, ? extends V>, V)
+  - Replaced by lambda `key -> Optional.ofNullable(map.get(key)).orElse(default)`
+- Functions.forMap(Map<K, V>)
+  - Replaced by lambda `map::get`
+- Functions.forPredicate(Predicate<T>)
+  - Replaced by lambda `predicate::apply`
+- Functions.forSupplier(Supplier<T>)
+  - Replaced by lambda `input -> supplier.get()`
+- Functions.identity()
+  - Replaced by lambda `input -> input`
+- Functions.toStringFunction()
+  - Replaced by `Object::toString`
+
 ## Joiner
 
 - Guava: com.google.common.base.Joiner
