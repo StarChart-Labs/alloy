@@ -1,4 +1,6 @@
-//Dependency versions managed in $rootDir/dependencies.properties
+description = 'Basic utilities to streamline common Java operations'
+
+//Dependency versions managed in ${rootDir}/dependencies.properties
 dependencies {
 	compile group: 'com.google.code.findbugs', name: 'jsr305'
 	
