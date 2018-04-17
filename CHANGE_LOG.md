@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Updated
+- Add description to maven POM to fulfill Maven Central requirements
 
 ## [0.1.0]
 ### Added
