@@ -9,3 +9,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add org.starchartlabs.alloy.core.Suppliers for streamlined and simplified use of Java Supplier construct
 - Add org.starchartlabs.alloy.core.Preconditions for streamlined validation of caller arguments
 - Add org.starchartlabs.alloy.core.Strings for streamlined and simplified use of Java Strings
+- Add org.starchartlabs.alloy.core.MoreObjects for streamlined and simplified object operations such as toString method implementations

@@ -24,7 +24,6 @@ import java.util.Objects;
 
 import javax.annotation.Nullable;
 
-//TODO romeara migration doc
 /**
  * Utilities intended to enhance and streamline use of {@code String} or {@code CharSequence} instances.
  *

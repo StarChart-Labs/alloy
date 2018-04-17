@@ -49,6 +49,26 @@ String joined = values.stream()
                    .collect(Collectors.joining(","));
 ```
 
+## MoreObjects
+
+- Guava: com.google.common.base.MoreObjects
+- Alloy: org.starchartlabs.alloy.core.MoreObjects
+
+### Unchanged APIS
+
+- MoreObjects.toStringHelper(Object)
+- MoreObjects.toStringHelper(Class)
+- MoreObjects.toStringHelper(String)
+
+### Removed APIs
+
+- MoreObjects.firstNonNull(T, T)
+  - As of Java 8, this can be achieved via `Optional.orElse()`, or `Stream.of(a, b).filter(Objects::nonNull).findFirst()`
+
+### Notes on ToStringBuilder
+
+Alloy's version of ToStringBuilder does not currently overload `add` or `addValue` for primitives - this seemed to be present to avoid auto-boxing, but seemed overzealous. An issue has been filed to more formally evaluate the performance gained from such overloading to determine if it is worthwhile
+  
 ## Preconditions
 
 - Guava: com.google.common.base.Preconditions
@@ -160,7 +180,7 @@ Guava Preconditions also provides some element index checking, however there doe
   - Preconditions.checkPositionIndex(int, int, String)
   - Preconditions.checkPositionIndexes(int, int, int)
   
- ## Strings
+## Strings
 
 - Guava: com.google.common.base.Strings
 - Alloy: org.starchartlabs.alloy.core.Strings
