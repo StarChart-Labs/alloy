@@ -10,6 +10,35 @@ Many of the utilities provided by Alloy are intended to take the place of simila
 
 Charsets has not been implemented, as all values it presented are now provided within Java by java.nio.charset.StandardCharsets
 
+## Comparators
+
+- Guava: com.google.common.collect.Comparators
+- Alloy: org.starchartlabs.alloy.core.Comparators
+
+### Unchanged APIs
+
+- Comparators.isInOrder(Iterable, Comparator)
+- Comparators.isInStrictOrder(Iterable, Comparator)
+
+### Updated APIs
+
+- Comparators.emptiesFirst(Iterable, Comparator)
+  - The behavior of null values has been changed - Guava treats empty Optionals and null as the same, Alloy does not
+- Comparators.emptiesLast(Iterable, Comparator)
+  - The behavior of null values has been changed - Guava treats empty Optionals and null as the same, Alloy does not
+
+### Removed APIs
+
+- Comparators.least(int, Comparator)
+  - As of Java 8, this can be achieved via `Stream.sorted(Comparator).limit(int)`
+- Comparators.greatest(int, Comparator)
+  - As of Java 8, this can be achieved via `Stream.sorted(Comparator.reversed()).limit(int)`
+  
+### Unimplemented APIs
+
+Guava Comparators also provides `Comparators.lexicographical`, however there does not appear to be a general use case for these. Issues/Pull requests accompanied by supporting arguments on why these are not overly-specialized are welcome
+ 
+
 ## Functions
 
 - Guava: com.google.common.base.Functions
