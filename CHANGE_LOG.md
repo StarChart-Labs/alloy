@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Add org.starchartlabs.alloy.core.Comparators for streamlined and reduced boilerplate in relation to Java Comparator construct
+- Prevent FindBugs JSR-305 implementation from being added as a transitive dependency to consuming projects
 
 ## [0.1.1]
 ### Updated
