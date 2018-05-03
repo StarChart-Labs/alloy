@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Add org.starchartlabs.alloy.core.Comparators for streamlined and reduced boilerplate in relation to Java Comparator construct
 
 ## [0.1.1]
 ### Updated
