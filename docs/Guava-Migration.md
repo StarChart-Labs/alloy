@@ -248,3 +248,29 @@ Guava Preconditions also provides some element index checking, however there doe
 - Suppliers.supplierFunction()
   - As of Java 8, a supplier's `get` function can be referenced for use in a lambda. Use `Supplier::get` instead
   
+## Throwables
+
+- Guava: com.google.common.base.Throwables
+- Alloy: org.starchartlabs.alloy.core.Throwables
+
+### Unchanged APIs
+
+### Removed APIs
+
+- Throwables.propagateIfInstanceOf(@Nullable Throwable throwable, Class<X> declaredType)
+  - Replaced by Throwables.throwIfInstanceOf
+- Throwables.propagateIfPossible(@Nullable Throwable throwable)
+  - Replaced by Throwables.throwIfUnchecked
+- Throwables.propagate(Throwable throwable)
+  - Use `throw e` or `throw new RuntimeException(e)` directly, or use a combination of Throwables.throwIfUnchecked and `throw new RuntimeException(e)`
+
+### Unimplemented APIs
+
+Use cases are not strong enough currently to include these functions, but issues/pull requests accompanied by supporting arguments on why these should be included are welcome
+
+- Throwables.propagateIfPossible(@Nullable Throwable throwable, Class<X> declaredType)
+- Throwables.propagateIfPossible(@Nullable Throwable throwable, Class<X1> declaredType1, Class<X2> declaredType2) throws X1, X2
+- Throwables.getCauseAs(Throwable throwable, Class<X> expectedCauseType)
+- Throwables.lazyStackTrace(Throwable throwable)
+- Throwables.lazyStackTraceIsLazy()
+- Throwables.jlaStackTrace(final Throwable t)
