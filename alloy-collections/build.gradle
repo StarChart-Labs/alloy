@@ -1,0 +1,10 @@
+description = 'Utilities to streamline common Java collection-related operations'
+
+//Dependency versions managed in ${rootDir}/dependencies.properties
+dependencies {
+	compileOnly group: 'com.google.code.findbugs', name: 'jsr305'
+	
+	compile project(':alloy-core')
+	
+	testCompile group: 'org.testng', name: 'testng'
+}

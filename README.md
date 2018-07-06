@@ -3,9 +3,9 @@
 [![Travis CI](https://img.shields.io/travis/StarChart-Labs/alloy.svg?branch=master)](https://travis-ci.org/StarChart-Labs/alloy) [![Code Coverage](https://img.shields.io/codecov/c/github/StarChart-Labs/alloy.svg)](https://codecov.io/github/StarChart-Labs/alloy) [![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/StarChart-Labs/alloy/branches/master/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/StarChart-Labs/alloy/branches/master) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 * [Contributing](#contributing)
-* [Projects](#projects)
-* [Reporting Vulnerabilities](#reporting-vulnerabilities)
 * [Legal](#legal)
+* [Reporting Vulnerabilities](#reporting-vulnerabilities)
+* [Projects](#projects)
 * [This Looks a Lot Like Guava...](#this-looks-a-lot-like-guava)
 
 General Java utilities and quality of life tools
@@ -33,6 +33,12 @@ If you discover a security vulnerability, contact the development team by e-mail
 [![Maven Central](https://img.shields.io/maven-central/v/org.starchartlabs.alloy/alloy-core.svg)](https://mvnrepository.com/artifact/org.starchartlabs.alloy/alloy-core)
 
 Alloy Core defines low-level utilities for basic Java use patterns
+
+### alloy-collections
+
+[![Maven Central](https://img.shields.io/maven-central/v/org.starchartlabs.alloy/alloy-collections.svg)](https://mvnrepository.com/artifact/org.starchartlabs.alloy/alloy-collections)
+
+Alloy Collections defines low-level utilities for Java use patterns related to collection operations
 
 ## This Looks a Lot Like Guava...
 

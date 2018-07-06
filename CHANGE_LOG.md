@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Add org.starchartlabs.alloy.core.MoreCollections for streamlined and reduced boilerplate in relation to Java collection constructs
 
 ## [0.2.0]
 ### Added
