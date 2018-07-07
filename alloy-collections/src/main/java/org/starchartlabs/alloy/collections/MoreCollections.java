@@ -32,7 +32,7 @@ public final class MoreCollections {
      *         .put("key", "value")
      *         .build();
      * </pre>
-     * 
+     *
      * @param <K>
      *            The type of keys maintained by the resulting map
      * @param <V>
@@ -64,7 +64,7 @@ public final class MoreCollections {
 
         private MapBuilder() {
             values = new ArrayList<>();
-            unmodifiable = false;
+            unmodifiable = true;
         }
 
         /**
@@ -98,13 +98,13 @@ public final class MoreCollections {
         }
 
         /**
-         * Configures the resulting map to be unmodifiable
+         * Configures the resulting map to be mutable/modifiable
          *
          * @return This builder instance
          * @since 1.0.0
          */
-        public MapBuilder<K, V> unmodifiable() {
-            this.unmodifiable = true;
+        public MapBuilder<K, V> mutable() {
+            this.unmodifiable = false;
 
             return this;
         }
@@ -130,7 +130,7 @@ public final class MoreCollections {
          *
          * <p>
          * Provided for cases where the specific implementation, capacity, or other properties of the resulting map are
-         * important
+         * important. Note that unless mutabliity is specified, the resulting map will be made unmodifiable
          *
          * <pre>
          * Map&lt;String, String&gt; example = MoreCollections.&lt;String, String&gt; mapBuilder()

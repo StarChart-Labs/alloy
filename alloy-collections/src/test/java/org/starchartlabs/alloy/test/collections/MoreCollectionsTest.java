@@ -19,6 +19,7 @@ public class MoreCollectionsTest {
     @Test
     public void mapBuilderSupplier() throws Exception {
         Map<String, String> result = MoreCollections.<String, String> mapBuilder()
+                .mutable()
                 .put("key", "value")
                 .build(LinkedHashMap::new);
 
@@ -36,6 +37,14 @@ public class MoreCollectionsTest {
         Assert.assertNotNull(result);
         Assert.assertEquals(result.size(), 1);
         Assert.assertEquals(result.get("key"), "value");
+
+        // Check that we got an unmodifiable map back
+        try {
+            result.put("key2", "value2");
+            Assert.fail("Modification was allowed on result");
+        } catch (Exception e) {
+            Assert.assertTrue(e instanceof UnsupportedOperationException);
+        }
     }
 
     @Test
@@ -45,18 +54,6 @@ public class MoreCollectionsTest {
 
         Map<String, String> result = MoreCollections.<String, String> mapBuilder()
                 .putAll(source)
-                .build();
-
-        Assert.assertNotNull(result);
-        Assert.assertEquals(result.size(), 1);
-        Assert.assertEquals(result.get("key"), "value");
-    }
-
-    @Test
-    public void mapBuilderUnmodifiable() throws Exception {
-        Map<String, String> result = MoreCollections.<String, String> mapBuilder()
-                .unmodifiable()
-                .put("key", "value")
                 .build();
 
         Assert.assertNotNull(result);
@@ -73,6 +70,23 @@ public class MoreCollectionsTest {
     }
 
     @Test
+    public void mapBuilderUnmodifiable() throws Exception {
+        Map<String, String> result = MoreCollections.<String, String> mapBuilder()
+                .mutable()
+                .put("key", "value")
+                .build();
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals(result.size(), 1);
+        Assert.assertEquals(result.get("key"), "value");
+
+        result.put("key2", "value2");
+
+        Assert.assertEquals(result.size(), 2);
+        Assert.assertEquals(result.get("key2"), "value2");
+    }
+
+    @Test
     public void mapBuilderAcceptNullValue() throws Exception {
         Map<String, String> result = MoreCollections.<String, String> mapBuilder()
                 .put("key", null)
@@ -81,6 +95,14 @@ public class MoreCollectionsTest {
         Assert.assertNotNull(result);
         Assert.assertEquals(result.size(), 1);
         Assert.assertNull(result.get("key"));
+
+        // Check that we got an unmodifiable map back
+        try {
+            result.put("key2", "value2");
+            Assert.fail("Modification was allowed on result");
+        } catch (Exception e) {
+            Assert.assertTrue(e instanceof UnsupportedOperationException);
+        }
     }
 
 }
