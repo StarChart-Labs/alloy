@@ -10,6 +10,6 @@
  * @author romeara
  */
 @ParametersAreNonnullByDefault
-package org.starchartlabs.alloy.collections;
+package org.starchartlabs.alloy.core.collections;
 
 import javax.annotation.ParametersAreNonnullByDefault;
