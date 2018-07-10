@@ -4,13 +4,13 @@
  * This software may be modified and distributed under the terms
  * of the MIT license. See the LICENSE file for details.
  */
-package org.starchartlabs.alloy.test.collections;
+package org.starchartlabs.alloy.test.core.collections;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.starchartlabs.alloy.collections.MoreCollections;
+import org.starchartlabs.alloy.core.collections.MoreCollections;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
