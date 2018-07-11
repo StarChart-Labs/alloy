@@ -34,12 +34,6 @@ If you discover a security vulnerability, contact the development team by e-mail
 
 Alloy Core defines low-level utilities for basic Java use patterns
 
-### alloy-collections
-
-[![Maven Central](https://img.shields.io/maven-central/v/org.starchartlabs.alloy/alloy-collections.svg)](https://mvnrepository.com/artifact/org.starchartlabs.alloy/alloy-collections)
-
-Alloy Collections defines low-level utilities for Java use patterns related to collection operations
-
 ## This Looks a Lot Like Guava...
 
 Alloy was heavily inspired by the Google Guava libraries, and replicates some of the core functionality of that utility. While the team working on Guava made an excellent library we've used over and over, enough minor annoyances have been encountered over time that we chose to make the effort to iterate on the established pattern.
