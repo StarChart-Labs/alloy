@@ -34,7 +34,7 @@ import javax.annotation.Nullable;
  * Due to the operation of the generics, the map returned by {@link #asMap} has {@code List} values, event thought the
  * method signature doesn't say so explicitly
  *
- * @see {@link Multimap}
+ * @see Multimap
  * @author romeara
  * @since 0.3.0
  */
