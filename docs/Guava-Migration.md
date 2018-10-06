@@ -78,6 +78,13 @@ String joined = values.stream()
                    .collect(Collectors.joining(","));
 ```
 
+## ListMultimap
+
+- Guava: com.google.common.collect.ListMultimap
+- Alloy: org.starchartlabs.alloy.core.collections.ListMultimap
+
+Alloy's ListMultimap extends from Multimap in the same way Guava's does - see notes on Multimap for API changes in relation to Guava's Multimap
+
 ## MoreObjects
 
 - Guava: com.google.common.base.MoreObjects
@@ -97,6 +104,45 @@ String joined = values.stream()
 ### Notes on ToStringBuilder
 
 Alloy's version of ToStringBuilder does not currently overload `add` or `addValue` for primitives - this seemed to be present to avoid auto-boxing, but seemed overzealous. An issue has been filed to more formally evaluate the performance gained from such overloading to determine if it is worthwhile
+  
+## Multimap
+
+- Guava: com.google.common.collect.Multimap
+- Alloy: org.starchartlabs.alloy.core.collections.Multimap
+
+### Unchanged APIs
+
+- Multimap.isEmpty()
+- Multimap.put(K, V)
+- Multimap.putAll(K, Iterable<V>)
+- Multimap.putAll(Multimap<K, V>)
+- Multimap.replaceAll(K, Iterable<V>)
+- Multimap.clear()
+- Multimap.get(K)
+- Multimap.keySet()
+- Multimap.asMap()
+- Multimap.forEach(BiConsumer<K,V>)
+
+### Updated APIs
+
+- Multimap.containsKey()
+  - The containsKey function has been updated to take an instance of the generic type designated for keys instead of an Object instance
+- Multimap.containsValue()
+  - The containsValue function has been updated to take an instance of the generic type designated for values instead of an Object instance
+- Multimap.containsEntry()
+  - The containsEntry function has been updated to take instances of the generic types designated for keys and values instead of Object instances
+- Multimap.remove()
+  - The remove function has been updated to take instances of the generic types designated for keys and values instead of Object instances
+- Multimap.removeAll()
+  - The removeAll function has been updated to take an instance of the generic type designated for keys instead of an Object instance5
+- Multimap.size()
+  - In Alloy, this is presented as Multimap.flatSize(), to better matchMap naming conventions. Alloy Multimap.size() cooresponds to the sizing mechanics of Java Map.size() instead
+- Multimap.keys()
+  - In Alloy, this is presented as Multimap.flatKeys(), to conform to a consistent naming for entry-based calls
+- Multimap.values()
+  - In Alloy, this is presented as Multimap.flatValues(), to conform to a consistent naming for entry-based calls
+- Multimap.entries()
+  - In Alloy, this is presented as Multimap.flatEntries(), to conform to a consistent naming for entry-based calls
   
 ## Preconditions
 
@@ -208,6 +254,13 @@ Guava Preconditions also provides some element index checking, however there doe
   - Preconditions.checkPositionIndex(int, int)
   - Preconditions.checkPositionIndex(int, int, String)
   - Preconditions.checkPositionIndexes(int, int, int)
+  
+## SetMultimap
+
+- Guava: com.google.common.collect.SetMultimap
+- Alloy: org.starchartlabs.alloy.core.collections.SetMultimap
+
+Alloy's SetMultimap extends from Multimap in the same way Guava's does - see notes on Multimap for API changes in relation to Guava's Multimap
   
 ## Strings
 
