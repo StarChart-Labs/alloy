@@ -7,9 +7,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Add org.starchartlabs.alloy.core.collections.MoreCollections for streamlined and reduced boilerplate in relation to Java collection constructs
-- Add org.starchartlabs.alloy.core.collections.Multimap for streamlined and reduced boilerplate in relation to managing one-to-many data structures
-- Add org.starchartlabs.alloy.core.collections.ListMultimap for streamlined and reduced boilerplate in relation to managing one-to-many data structures where the order of the "many" values matters
-- Add org.starchartlabs.alloy.core.collections.SetMultimap for streamlined and reduced boilerplate in relation to managing one-to-many data structures where the "many" values are unique
 
 ## [0.2.0]
 ### Added
