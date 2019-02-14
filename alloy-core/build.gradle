@@ -2,7 +2,8 @@ description = 'Basic utilities to streamline common Java operations'
 
 //Dependency versions managed in ${rootDir}/dependencies.properties
 dependencies {
-	compileOnly group: 'com.google.code.findbugs', name: 'jsr305'
+	compileOnly 'com.google.code.findbugs:jsr305'
 	
-	testCompile group: 'org.testng', name: 'testng'
+	testCompile 'org.testng:testng'
+    testCompile 'org.mockito:mockito-core'
 }

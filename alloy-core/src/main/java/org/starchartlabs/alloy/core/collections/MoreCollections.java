@@ -20,7 +20,7 @@ import java.util.function.Supplier;
  * Provides methods for streamlining and reducing boilerplate in relation to operations related to Java collections
  *
  * @author romeara
- * @since 1.0.0
+ * @since 0.3.0
  */
 public final class MoreCollections {
 

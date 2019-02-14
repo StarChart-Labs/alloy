@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Add org.starchartlabs.alloy.core.collections.MoreSpliterators for streamlined and reduced boilerplate in relation to Java spliterator constructs
+- Addition of support for short-circuited spliterators via org.starchartlabs.alloy.core.collections.MoreSpliterators.shortCircuit
 
 ## [0.3.0]
 ### Added
