@@ -7,6 +7,7 @@
 package org.starchartlabs.alloy.core.collections;
 
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Spliterator;
@@ -47,6 +48,20 @@ public final class MoreSpliterators {
     public static <T, A> Spliterator<T> shortCircuit(Spliterator<T> spliterator,
             BiFunction<Optional<A>, ? super T, A> accumulator, Predicate<A> completedPredicate) {
         return new ShortCircuitSpliterator<>(spliterator, accumulator, completedPredicate);
+    }
+
+    /**
+     * Returns a spliterator which allows traversing over elements provided via a paging protocol
+     *
+     * @param pageProvider
+     *            A source-specific implementation which handles the protocol for reading a sequence of paged data
+     * @param <T>
+     *            Representation of a single element in the sequence
+     * @return A spliterator which allows traversing over elements provided via a paging protocol
+     * @since 0.4.0
+     */
+    public static <T> Spliterator<T> ofPaged(PageProvider<T> pageProvider) {
+        return new PageSpliterator<>(pageProvider);
     }
 
     private static class ShortCircuitSpliterator<T, A> implements Spliterator<T> {
@@ -129,6 +144,54 @@ public final class MoreSpliterators {
                 return accumulated;
             }
 
+        }
+
+    }
+
+    private static class PageSpliterator<T> implements Spliterator<T> {
+
+        private final PageProvider<T> pageProvider;
+
+        private LinkedList<T> elements;
+
+        public PageSpliterator(PageProvider<T> pageProvider) {
+            this.pageProvider = Objects.requireNonNull(pageProvider);
+            elements = new LinkedList<>();
+        }
+
+        @Override
+        public boolean tryAdvance(Consumer<? super T> action) {
+            // Populate next set of elements, if possible
+            if (elements.isEmpty() && pageProvider.hasNext()) {
+                elements.addAll(pageProvider.next());
+            }
+
+            T element = elements.poll();
+
+            if (element != null) {
+                action.accept(element);
+            }
+
+            return (element != null);
+        }
+
+        @Override
+        public Spliterator<T> trySplit() {
+            return Optional.ofNullable(pageProvider.trySplit())
+                    .map(a -> new PageSpliterator<T>(a))
+                    .orElse(null);
+        }
+
+        @Override
+        public long estimateSize() {
+            return pageProvider.estimateSize();
+        }
+
+        @Override
+        public int characteristics() {
+            // This implementation cannot know what properties various paging elements support, aside from not being
+            // modifiable and having some form of ordering (without an ordering, stable paging would not be possible)
+            return Spliterator.IMMUTABLE | Spliterator.ORDERED;
         }
 
     }

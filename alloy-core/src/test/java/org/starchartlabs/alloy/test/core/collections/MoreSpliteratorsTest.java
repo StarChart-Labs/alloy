@@ -9,6 +9,8 @@ package org.starchartlabs.alloy.test.core.collections;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Spliterator;
 import java.util.Spliterators;
@@ -17,6 +19,7 @@ import java.util.stream.StreamSupport;
 
 import org.mockito.Mockito;
 import org.starchartlabs.alloy.core.collections.MoreSpliterators;
+import org.starchartlabs.alloy.core.collections.PageProvider;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -76,15 +79,20 @@ public class MoreSpliteratorsTest {
         .thenReturn(Spliterator.CONCURRENT | Spliterator.DISTINCT | Spliterator.IMMUTABLE | Spliterator.NONNULL
                 | Spliterator.ORDERED | Spliterator.SIZED | Spliterator.SORTED | Spliterator.SUBSIZED);
 
-        int expected = Spliterator.DISTINCT | Spliterator.IMMUTABLE | Spliterator.NONNULL | Spliterator.ORDERED
-                | Spliterator.SORTED;
+        try {
+            int expected = Spliterator.DISTINCT | Spliterator.IMMUTABLE | Spliterator.NONNULL | Spliterator.ORDERED
+                    | Spliterator.SORTED;
 
-        int result = MoreSpliterators.shortCircuit(spliterator, this::accumulateMock, a -> a != null).characteristics();
+            int result = MoreSpliterators.shortCircuit(spliterator, this::accumulateMock, a -> a != null).characteristics();
 
-        // Make sure of the available options, only the intended supporting ones pass through
-        // Each of the pruned options is either violated by the nature of short-circuiting or requires additional work
-        // to support
-        Assert.assertEquals(result, expected);
+            // Make sure of the available options, only the intended supporting ones pass through
+            // Each of the pruned options is either violated by the nature of short-circuiting or requires additional work
+            // to support
+            Assert.assertEquals(result, expected);
+        } finally {
+            Mockito.verify(spliterator).characteristics();
+            Mockito.verifyNoMoreInteractions(spliterator);
+        }
     }
 
     @Test
@@ -95,12 +103,133 @@ public class MoreSpliteratorsTest {
 
         Mockito.when(spliterator.getComparator()).thenReturn(expected);
 
-        Comparator<Object> result = MoreSpliterators.shortCircuit(spliterator, this::accumulateMock, a -> a != null)
-                .getComparator();
+        try {
+            Comparator<Object> result = MoreSpliterators.shortCircuit(spliterator, this::accumulateMock, a -> a != null)
+                    .getComparator();
 
-        // Passing through to the underlying spliterator allows the short-circuit implementation to support the SORTED
-        // characteristic, if the underlying stream does
-        Assert.assertEquals(result, expected);
+            // Passing through to the underlying spliterator allows the short-circuit implementation to support the
+            // SORTED characteristic, if the underlying stream does
+            Assert.assertEquals(result, expected);
+        } finally {
+            Mockito.verify(spliterator).getComparator();
+            Mockito.verifyNoMoreInteractions(spliterator);
+        }
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void ofPagedNullPageProvider() throws Exception {
+        MoreSpliterators.ofPaged(null);
+    }
+
+    @Test
+    public void ofPagedNoPages() throws Exception {
+        PageProvider<String> pageProvider = new TestPageProvider();
+
+        Spliterator<String> result = MoreSpliterators.ofPaged(pageProvider);
+
+        Assert.assertNotNull(result);
+        List<String> values = StreamSupport.stream(result, false)
+                .collect(Collectors.toList());
+
+        Assert.assertTrue(values.isEmpty());
+    }
+
+    @Test
+    public void ofPagedSinglePage() throws Exception {
+        PageProvider<String> pageProvider = new TestPageProvider(Arrays.asList("1", "2"));
+
+        Spliterator<String> result = MoreSpliterators.ofPaged(pageProvider);
+
+        Assert.assertNotNull(result);
+        List<String> values = StreamSupport.stream(result, false)
+                .collect(Collectors.toList());
+
+        Assert.assertEquals(values.size(), 2);
+        Assert.assertTrue(values.contains("1"));
+        Assert.assertTrue(values.contains("2"));
+    }
+
+    @Test
+    public void ofPagedMultiplePages() throws Exception {
+        PageProvider<String> pageProvider = new TestPageProvider(Arrays.asList("1", "2"), Arrays.asList("3", "4"));
+
+        Spliterator<String> result = MoreSpliterators.ofPaged(pageProvider);
+
+        Assert.assertNotNull(result);
+        List<String> values = StreamSupport.stream(result, false)
+                .collect(Collectors.toList());
+
+        Assert.assertEquals(values.size(), 4);
+        Assert.assertTrue(values.contains("1"));
+        Assert.assertTrue(values.contains("2"));
+        Assert.assertTrue(values.contains("3"));
+        Assert.assertTrue(values.contains("4"));
+    }
+
+    @Test
+    public void ofPagedTrySplitNotSupported() throws Exception {
+        PageProvider<?> pageProvider = Mockito.mock(PageProvider.class);
+        Mockito.when(pageProvider.trySplit()).thenReturn(null);
+
+        try {
+            Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageProvider);
+
+            Spliterator<?> result = spliterator.trySplit();
+            Assert.assertNull(result);
+        } finally {
+            Mockito.verify(pageProvider).trySplit();
+            Mockito.verifyNoMoreInteractions(pageProvider);
+        }
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void ofPagedTrySplit() throws Exception {
+        PageProvider<?> pageProvider = Mockito.mock(PageProvider.class);
+        Mockito.when(pageProvider.trySplit()).thenReturn(Mockito.mock(PageProvider.class));
+
+        try {
+            Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageProvider);
+
+            Spliterator<?> result = spliterator.trySplit();
+            Assert.assertNotNull(result);
+        } finally {
+            Mockito.verify(pageProvider).trySplit();
+            Mockito.verifyNoMoreInteractions(pageProvider);
+        }
+    }
+
+    @Test
+    public void ofPagedEstimateSize() throws Exception {
+        long expected = 2L;
+        PageProvider<?> pageProvider = Mockito.mock(PageProvider.class);
+        Mockito.when(pageProvider.estimateSize()).thenReturn(expected);
+
+        try {
+            Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageProvider);
+
+            long result = spliterator.estimateSize();
+
+            Assert.assertEquals(result, expected);
+        } finally {
+            Mockito.verify(pageProvider).estimateSize();
+            Mockito.verifyNoMoreInteractions(pageProvider);
+        }
+    }
+
+    @Test
+    public void ofPagedCharacteristics() throws Exception {
+        PageProvider<?> pageProvider = Mockito.mock(PageProvider.class);
+
+        try {
+            Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageProvider);
+
+            int result = spliterator.characteristics();
+
+            Assert.assertEquals(result, Spliterator.IMMUTABLE | Spliterator.ORDERED);
+        } finally {
+            Mockito.verifyNoMoreInteractions(pageProvider);
+        }
     }
 
     private Integer accumulate(Optional<Integer> a, Integer b) {
@@ -109,6 +238,37 @@ public class MoreSpliteratorsTest {
 
     private Object accumulateMock(Optional<Object> a, Object b) {
         return b;
+    }
+
+    private static class TestPageProvider implements PageProvider<String> {
+
+        private final LinkedList<Collection<String>> pages;
+
+        @SafeVarargs
+        public TestPageProvider(Collection<String>... pages) {
+            this.pages = new LinkedList<>(Arrays.asList(pages));
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !pages.isEmpty();
+        }
+
+        @Override
+        public Collection<String> next() {
+            return pages.pollFirst();
+        }
+
+        @Override
+        public long estimateSize() {
+            return Long.MAX_VALUE;
+        }
+
+        @Override
+        public PageProvider<String> trySplit() {
+            return null;
+        }
+
     }
 
 }
