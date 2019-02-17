@@ -13,20 +13,20 @@ import java.util.stream.Stream;
 
 /**
  * Represents a specialized iterator for handling elements read in distinct chunks ("pages"). Instances of
- * {@link PageProvider} are primarily used with {@link MoreSpliterators#ofPaged(PageProvider)} to allow treated a
+ * {@link PageIterator} are primarily used with {@link MoreSpliterators#ofPaged(PageIterator)} to allow treating a
  * sequence of pages as a standard Java {@link Stream}
  *
  * <p>
- * Implementations of {@link PageProvider} handle underlying traversal and advancement through a sequence of pages
+ * Implementations of {@link PageIterator} handle underlying traversal and advancement through a sequence of pages
  *
  * @author romeara
  *
  * @param <T>
  *            Type representing a single element of the paged data set
  * @since 0.4.0
- * @see MoreSpliterators#ofPaged(PageProvider)
+ * @see MoreSpliterators#ofPaged(PageIterator)
  */
-public interface PageProvider<T> extends Iterator<Collection<T>> {
+public interface PageIterator<T> extends Iterator<Collection<T>> {
 
     /**
      * Returns an estimate of the number of elements that would be encountered by a complete traversal, or returns
@@ -51,6 +51,6 @@ public interface PageProvider<T> extends Iterator<Collection<T>> {
      *         be split
      * @since 0.4.0
      */
-    PageProvider<T> trySplit();
+    PageIterator<T> trySplit();
 
 }

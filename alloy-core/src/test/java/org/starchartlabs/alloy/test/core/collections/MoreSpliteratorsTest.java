@@ -19,7 +19,7 @@ import java.util.stream.StreamSupport;
 
 import org.mockito.Mockito;
 import org.starchartlabs.alloy.core.collections.MoreSpliterators;
-import org.starchartlabs.alloy.core.collections.PageProvider;
+import org.starchartlabs.alloy.core.collections.PageIterator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -123,7 +123,7 @@ public class MoreSpliteratorsTest {
 
     @Test
     public void ofPagedNoPages() throws Exception {
-        PageProvider<String> pageProvider = new TestPageProvider();
+        PageIterator<String> pageProvider = new TestPageProvider();
 
         Spliterator<String> result = MoreSpliterators.ofPaged(pageProvider);
 
@@ -136,7 +136,7 @@ public class MoreSpliteratorsTest {
 
     @Test
     public void ofPagedSinglePage() throws Exception {
-        PageProvider<String> pageProvider = new TestPageProvider(Arrays.asList("1", "2"));
+        PageIterator<String> pageProvider = new TestPageProvider(Arrays.asList("1", "2"));
 
         Spliterator<String> result = MoreSpliterators.ofPaged(pageProvider);
 
@@ -151,7 +151,7 @@ public class MoreSpliteratorsTest {
 
     @Test
     public void ofPagedMultiplePages() throws Exception {
-        PageProvider<String> pageProvider = new TestPageProvider(Arrays.asList("1", "2"), Arrays.asList("3", "4"));
+        PageIterator<String> pageProvider = new TestPageProvider(Arrays.asList("1", "2"), Arrays.asList("3", "4"));
 
         Spliterator<String> result = MoreSpliterators.ofPaged(pageProvider);
 
@@ -168,7 +168,7 @@ public class MoreSpliteratorsTest {
 
     @Test
     public void ofPagedTrySplitNotSupported() throws Exception {
-        PageProvider<?> pageProvider = Mockito.mock(PageProvider.class);
+        PageIterator<?> pageProvider = Mockito.mock(PageIterator.class);
         Mockito.when(pageProvider.trySplit()).thenReturn(null);
 
         try {
@@ -185,8 +185,8 @@ public class MoreSpliteratorsTest {
     @Test
     @SuppressWarnings("unchecked")
     public void ofPagedTrySplit() throws Exception {
-        PageProvider<?> pageProvider = Mockito.mock(PageProvider.class);
-        Mockito.when(pageProvider.trySplit()).thenReturn(Mockito.mock(PageProvider.class));
+        PageIterator<?> pageProvider = Mockito.mock(PageIterator.class);
+        Mockito.when(pageProvider.trySplit()).thenReturn(Mockito.mock(PageIterator.class));
 
         try {
             Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageProvider);
@@ -202,7 +202,7 @@ public class MoreSpliteratorsTest {
     @Test
     public void ofPagedEstimateSize() throws Exception {
         long expected = 2L;
-        PageProvider<?> pageProvider = Mockito.mock(PageProvider.class);
+        PageIterator<?> pageProvider = Mockito.mock(PageIterator.class);
         Mockito.when(pageProvider.estimateSize()).thenReturn(expected);
 
         try {
@@ -219,7 +219,7 @@ public class MoreSpliteratorsTest {
 
     @Test
     public void ofPagedCharacteristics() throws Exception {
-        PageProvider<?> pageProvider = Mockito.mock(PageProvider.class);
+        PageIterator<?> pageProvider = Mockito.mock(PageIterator.class);
 
         try {
             Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageProvider);
@@ -240,7 +240,7 @@ public class MoreSpliteratorsTest {
         return b;
     }
 
-    private static class TestPageProvider implements PageProvider<String> {
+    private static class TestPageProvider implements PageIterator<String> {
 
         private final LinkedList<Collection<String>> pages;
 
@@ -265,7 +265,7 @@ public class MoreSpliteratorsTest {
         }
 
         @Override
-        public PageProvider<String> trySplit() {
+        public PageIterator<String> trySplit() {
             return null;
         }
 

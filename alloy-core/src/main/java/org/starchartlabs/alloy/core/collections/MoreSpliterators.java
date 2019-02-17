@@ -53,15 +53,15 @@ public final class MoreSpliterators {
     /**
      * Returns a spliterator which allows traversing over elements provided via a paging protocol
      *
-     * @param pageProvider
+     * @param pageIterator
      *            A source-specific implementation which handles the protocol for reading a sequence of paged data
      * @param <T>
      *            Representation of a single element in the sequence
      * @return A spliterator which allows traversing over elements provided via a paging protocol
      * @since 0.4.0
      */
-    public static <T> Spliterator<T> ofPaged(PageProvider<T> pageProvider) {
-        return new PageSpliterator<>(pageProvider);
+    public static <T> Spliterator<T> ofPaged(PageIterator<T> pageIterator) {
+        return new PageSpliterator<>(pageIterator);
     }
 
     private static class ShortCircuitSpliterator<T, A> implements Spliterator<T> {
@@ -150,20 +150,20 @@ public final class MoreSpliterators {
 
     private static class PageSpliterator<T> implements Spliterator<T> {
 
-        private final PageProvider<T> pageProvider;
+        private final PageIterator<T> pageIterator;
 
         private LinkedList<T> elements;
 
-        public PageSpliterator(PageProvider<T> pageProvider) {
-            this.pageProvider = Objects.requireNonNull(pageProvider);
+        public PageSpliterator(PageIterator<T> pageIterator) {
+            this.pageIterator = Objects.requireNonNull(pageIterator);
             elements = new LinkedList<>();
         }
 
         @Override
         public boolean tryAdvance(Consumer<? super T> action) {
             // Populate next set of elements, if possible
-            if (elements.isEmpty() && pageProvider.hasNext()) {
-                elements.addAll(pageProvider.next());
+            if (elements.isEmpty() && pageIterator.hasNext()) {
+                elements.addAll(pageIterator.next());
             }
 
             T element = elements.poll();
@@ -177,14 +177,14 @@ public final class MoreSpliterators {
 
         @Override
         public Spliterator<T> trySplit() {
-            return Optional.ofNullable(pageProvider.trySplit())
+            return Optional.ofNullable(pageIterator.trySplit())
                     .map(a -> new PageSpliterator<T>(a))
                     .orElse(null);
         }
 
         @Override
         public long estimateSize() {
-            return pageProvider.estimateSize();
+            return pageIterator.estimateSize();
         }
 
         @Override
