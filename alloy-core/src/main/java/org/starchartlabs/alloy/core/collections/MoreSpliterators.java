@@ -184,7 +184,14 @@ public final class MoreSpliterators {
 
         @Override
         public long estimateSize() {
-            return pageIterator.estimateSize();
+            long estimate = pageIterator.estimateSize();
+
+            // Check that we can add the cached element size to the estimate, without overflowing the long
+            if (Long.MAX_VALUE - elements.size() >= estimate) {
+                estimate = estimate + elements.size();
+            }
+
+            return estimate;
         }
 
         @Override
