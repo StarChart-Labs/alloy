@@ -9,6 +9,8 @@ package org.starchartlabs.alloy.test.core.collections;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Spliterator;
 import java.util.Spliterators;
@@ -17,6 +19,7 @@ import java.util.stream.StreamSupport;
 
 import org.mockito.Mockito;
 import org.starchartlabs.alloy.core.collections.MoreSpliterators;
+import org.starchartlabs.alloy.core.collections.PageIterator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -76,15 +79,20 @@ public class MoreSpliteratorsTest {
         .thenReturn(Spliterator.CONCURRENT | Spliterator.DISTINCT | Spliterator.IMMUTABLE | Spliterator.NONNULL
                 | Spliterator.ORDERED | Spliterator.SIZED | Spliterator.SORTED | Spliterator.SUBSIZED);
 
-        int expected = Spliterator.DISTINCT | Spliterator.IMMUTABLE | Spliterator.NONNULL | Spliterator.ORDERED
-                | Spliterator.SORTED;
+        try {
+            int expected = Spliterator.DISTINCT | Spliterator.IMMUTABLE | Spliterator.NONNULL | Spliterator.ORDERED
+                    | Spliterator.SORTED;
 
-        int result = MoreSpliterators.shortCircuit(spliterator, this::accumulateMock, a -> a != null).characteristics();
+            int result = MoreSpliterators.shortCircuit(spliterator, this::accumulateMock, a -> a != null).characteristics();
 
-        // Make sure of the available options, only the intended supporting ones pass through
-        // Each of the pruned options is either violated by the nature of short-circuiting or requires additional work
-        // to support
-        Assert.assertEquals(result, expected);
+            // Make sure of the available options, only the intended supporting ones pass through
+            // Each of the pruned options is either violated by the nature of short-circuiting or requires additional work
+            // to support
+            Assert.assertEquals(result, expected);
+        } finally {
+            Mockito.verify(spliterator).characteristics();
+            Mockito.verifyNoMoreInteractions(spliterator);
+        }
     }
 
     @Test
@@ -95,12 +103,165 @@ public class MoreSpliteratorsTest {
 
         Mockito.when(spliterator.getComparator()).thenReturn(expected);
 
-        Comparator<Object> result = MoreSpliterators.shortCircuit(spliterator, this::accumulateMock, a -> a != null)
-                .getComparator();
+        try {
+            Comparator<Object> result = MoreSpliterators.shortCircuit(spliterator, this::accumulateMock, a -> a != null)
+                    .getComparator();
 
-        // Passing through to the underlying spliterator allows the short-circuit implementation to support the SORTED
-        // characteristic, if the underlying stream does
-        Assert.assertEquals(result, expected);
+            // Passing through to the underlying spliterator allows the short-circuit implementation to support the
+            // SORTED characteristic, if the underlying stream does
+            Assert.assertEquals(result, expected);
+        } finally {
+            Mockito.verify(spliterator).getComparator();
+            Mockito.verifyNoMoreInteractions(spliterator);
+        }
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void ofPagedNullPageProvider() throws Exception {
+        MoreSpliterators.ofPaged(null);
+    }
+
+    @Test
+    public void ofPagedNoPages() throws Exception {
+        PageIterator<String> pageIterator = new TestPageIterator();
+
+        Spliterator<String> result = MoreSpliterators.ofPaged(pageIterator);
+
+        Assert.assertNotNull(result);
+        List<String> values = StreamSupport.stream(result, false)
+                .collect(Collectors.toList());
+
+        Assert.assertTrue(values.isEmpty());
+    }
+
+    @Test
+    public void ofPagedSinglePage() throws Exception {
+        PageIterator<String> pageIterator = new TestPageIterator(Arrays.asList("1", "2"));
+
+        Spliterator<String> result = MoreSpliterators.ofPaged(pageIterator);
+
+        Assert.assertNotNull(result);
+        List<String> values = StreamSupport.stream(result, false)
+                .collect(Collectors.toList());
+
+        Assert.assertEquals(values.size(), 2);
+        Assert.assertTrue(values.contains("1"));
+        Assert.assertTrue(values.contains("2"));
+    }
+
+    @Test
+    public void ofPagedMultiplePages() throws Exception {
+        PageIterator<String> pageIterator = new TestPageIterator(Arrays.asList("1", "2"), Arrays.asList("3", "4"));
+
+        Spliterator<String> result = MoreSpliterators.ofPaged(pageIterator);
+
+        Assert.assertNotNull(result);
+        List<String> values = StreamSupport.stream(result, false)
+                .collect(Collectors.toList());
+
+        Assert.assertEquals(values.size(), 4);
+        Assert.assertTrue(values.contains("1"));
+        Assert.assertTrue(values.contains("2"));
+        Assert.assertTrue(values.contains("3"));
+        Assert.assertTrue(values.contains("4"));
+    }
+
+    @Test
+    public void ofPagedTrySplitNotSupported() throws Exception {
+        PageIterator<?> pageIterator = Mockito.mock(PageIterator.class);
+        Mockito.when(pageIterator.trySplit()).thenReturn(null);
+
+        try {
+            Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageIterator);
+
+            Spliterator<?> result = spliterator.trySplit();
+            Assert.assertNull(result);
+        } finally {
+            Mockito.verify(pageIterator).trySplit();
+            Mockito.verifyNoMoreInteractions(pageIterator);
+        }
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void ofPagedTrySplit() throws Exception {
+        PageIterator<?> pageIterator = Mockito.mock(PageIterator.class);
+        Mockito.when(pageIterator.trySplit()).thenReturn(Mockito.mock(PageIterator.class));
+
+        try {
+            Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageIterator);
+
+            Spliterator<?> result = spliterator.trySplit();
+            Assert.assertNotNull(result);
+        } finally {
+            Mockito.verify(pageIterator).trySplit();
+            Mockito.verifyNoMoreInteractions(pageIterator);
+        }
+    }
+
+    @Test
+    public void ofPagedEstimateSize() throws Exception {
+        long expected = 2L;
+        PageIterator<?> pageIterator = Mockito.mock(PageIterator.class);
+        Mockito.when(pageIterator.estimateSize()).thenReturn(expected);
+
+        try {
+            Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageIterator);
+
+            long result = spliterator.estimateSize();
+
+            Assert.assertEquals(result, expected);
+        } finally {
+            Mockito.verify(pageIterator).estimateSize();
+            Mockito.verifyNoMoreInteractions(pageIterator);
+        }
+    }
+
+    @Test
+    public void ofPagedEstimateSizeAddElements() throws Exception {
+        PageIterator<?> pageIterator = new TestPageIterator(true, Arrays.asList("1", "2", "3", "4"),
+                Arrays.asList("22", "33"));
+
+        Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageIterator);
+
+        // Eat the first value to load elements into the cache
+        spliterator.tryAdvance(a -> {
+        });
+        long result = spliterator.estimateSize();
+
+        Assert.assertEquals(result, 5, "Expected result of 3 remaining from first page and two from second page");
+
+    }
+
+    @Test
+    public void ofPagedEstimateSizeNoOverflow() throws Exception {
+        PageIterator<?> pageIterator = new TestPageIterator(false, Arrays.asList("1", "2", "3", "4"),
+                Arrays.asList("22", "33"));
+
+        Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageIterator);
+
+        // Eat the first value to load elements into the cache
+        spliterator.tryAdvance(a -> {
+        });
+        long result = spliterator.estimateSize();
+
+        Assert.assertEquals(result, Long.MAX_VALUE,
+                "Expected page iterator estimate of MAX to be ceiling for estimate");
+    }
+
+    @Test
+    public void ofPagedCharacteristics() throws Exception {
+        PageIterator<?> pageIterator = Mockito.mock(PageIterator.class);
+
+        try {
+            Spliterator<?> spliterator = MoreSpliterators.ofPaged(pageIterator);
+
+            int result = spliterator.characteristics();
+
+            Assert.assertEquals(result, Spliterator.IMMUTABLE | Spliterator.ORDERED);
+        } finally {
+            Mockito.verifyNoMoreInteractions(pageIterator);
+        }
     }
 
     private Integer accumulate(Optional<Integer> a, Integer b) {
@@ -109,6 +270,51 @@ public class MoreSpliteratorsTest {
 
     private Object accumulateMock(Optional<Object> a, Object b) {
         return b;
+    }
+
+    private static class TestPageIterator implements PageIterator<String> {
+
+        private final LinkedList<Collection<String>> pages;
+
+        private final boolean estimateSize;
+
+        @SafeVarargs
+        public TestPageIterator(Collection<String>... pages) {
+            this(false, pages);
+        }
+
+        @SafeVarargs
+        public TestPageIterator(boolean estimateSize, Collection<String>... pages) {
+            this.pages = new LinkedList<>(Arrays.asList(pages));
+            this.estimateSize = estimateSize;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !pages.isEmpty();
+        }
+
+        @Override
+        public Collection<String> next() {
+            return pages.pollFirst();
+        }
+
+        @Override
+        public long estimateSize() {
+            return (estimateSize ? getEstimatedSize() : Long.MAX_VALUE);
+        }
+
+        @Override
+        public PageIterator<String> trySplit() {
+            return null;
+        }
+
+        private long getEstimatedSize() {
+            return pages.stream()
+                    .map(Collection::size)
+                    .collect(Collectors.summingLong(a -> a));
+        }
+
     }
 
 }
