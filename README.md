@@ -14,7 +14,7 @@ Alloy is intended to help streamline use of common Java patterns, and reduce boi
 
 ## Contributing
 
-Information for how to contribute to Alloy can be found in [the contribution guidelines](./doc/CONTRIBUTING.md)
+Information for how to contribute to Alloy can be found in [the contribution guidelines](./docs/CONTRIBUTING.md)
 
 ## Legal
 
