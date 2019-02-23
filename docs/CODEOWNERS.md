@@ -1,3 +1,2 @@
 # Default reviewers for any pull requests
-
-*       @romeara
+*       @starchart-labs/the-vanguard
