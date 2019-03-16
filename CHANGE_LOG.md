@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+
+- Updated external dependency versions to latest bugfix releases
 
 ## [0.4.0]
 ### Added
