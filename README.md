@@ -1,6 +1,6 @@
 # Alloy
 
-[![Travis CI](https://img.shields.io/travis/com/StarChart-Labs/alloy.svg?branch=master)](https://travis-ci.com/StarChart-Labs/alloy) [![Code Coverage](https://img.shields.io/codecov/c/github/StarChart-Labs/alloy.svg)](https://codecov.io/github/StarChart-Labs/alloy) [![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/StarChart-Labs/alloy/branches/master/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/StarChart-Labs/alloy/branches/master) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Travis CI](https://img.shields.io/travis/com/StarChart-Labs/alloy.svg?branch=master)](https://travis-ci.com/StarChart-Labs/alloy) [![Code Coverage](https://img.shields.io/codecov/c/github/StarChart-Labs/alloy.svg)](https://codecov.io/github/StarChart-Labs/alloy) [![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/StarChart-Labs/alloy/branches/master/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/StarChart-Labs/alloy/branches/master) [![Changelog validated by Chronicler](https://chronicler.starchartlabs.org/images/changelog-chronicler-success.png)](https://chronicler.starchartlabs.org/) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 * [Contributing](#contributing)
 * [Legal](#legal)
