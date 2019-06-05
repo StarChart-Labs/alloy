@@ -6,7 +6,7 @@ buildscript {
     	classpath group: 'com.jfrog.bintray.gradle', name: 'gradle-bintray-plugin', version: '1.7.3'
         classpath group: 'com.netflix.nebula', name: 'nebula-dependency-recommender', version: '4.2.0'
         classpath group: 'com.netflix.nebula', name: 'nebula-publishing-plugin', version: '4.2.0'
-        classpath group: 'org.starchartlabs.flare', name: 'flare-operations-plugins', version: '0.1.0'
+        classpath group: 'org.starchartlabs.flare', name: 'flare-operations-plugins', version: '1.0.0'
         classpath group: 'org.starchartlabs.flare', name: 'flare-publishing-plugins', version: '0.2.0'
     }
 }
