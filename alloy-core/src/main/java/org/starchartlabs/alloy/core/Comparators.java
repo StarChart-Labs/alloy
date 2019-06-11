@@ -140,7 +140,7 @@ public final class Comparators {
      * @param <T>
      *            The type of objects within Optional values that may be compared by this comparator
      */
-    private final static class EmptyOptionalComparator<T> implements Comparator<Optional<T>> {
+    private static final class EmptyOptionalComparator<T> implements Comparator<Optional<T>> {
 
         private final boolean emptiesFirst;
 
