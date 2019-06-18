@@ -58,13 +58,6 @@ subprojects{
     apply plugin: 'org.starchartlabs.flare.source-jars'
 	apply plugin: 'org.starchartlabs.flare.published-project'
     
-    // Use Eclipse containers for greater portability
-    eclipse {
-        classpath {
-            containers = [ "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-${sourceCompatibility}".toString() ]
-        }
-    }
-    
     checkstyle {
         configFile = rootProject.file('config/checkstyle/checkstyle.xml')
         configProperties = [ 'checkstyle.config.dir' : rootProject.file('config/checkstyle') ]
