@@ -14,10 +14,7 @@ buildscript {
 apply plugin: 'org.starchartlabs.flare.merge-coverage-reports'
 
 allprojects{
-    apply plugin: 'java'
-    apply plugin: 'checkstyle'
     apply plugin: 'eclipse'
-    apply plugin: 'jacoco'
     apply plugin: 'nebula.dependency-recommender'
     apply plugin: 'nebula.maven-resolved-dependencies'
     apply plugin: 'org.starchartlabs.flare.dependency-insight'
@@ -26,18 +23,38 @@ allprojects{
         propertiesFile file: file("${rootDir}/dependencies.properties")
 	}
 
-    sourceCompatibility = "${javaVersion}"
-
-    //Always download sources, to allow debugging, and use Eclipse containers for greater portability
+    //Always download sources, to allow debugging
     eclipse {
         classpath {
             downloadSources=true
-            containers = [ "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-${sourceCompatibility}".toString() ]
         }
     }
 
     repositories {
         mavenCentral()
+    }
+
+}
+
+subprojects{
+    apply plugin: 'java'
+    apply plugin: 'checkstyle'
+    apply plugin: 'jacoco'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.jfrog.bintray'
+    apply plugin: 'nebula.maven-base-publish'
+    apply plugin: 'nebula.maven-dependencies'
+    apply plugin: 'org.starchartlabs.flare.increase-test-logging'
+    apply plugin: 'org.starchartlabs.flare.source-jars'
+	apply plugin: 'org.starchartlabs.flare.published-project'
+    
+    sourceCompatibility = "${javaVersion}"
+    
+    // Use Eclipse containers for greater portability
+    eclipse {
+        classpath {
+            containers = [ "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-${sourceCompatibility}".toString() ]
+        }
     }
     
     checkstyle {
@@ -51,17 +68,6 @@ allprojects{
      tasks.withType(Checkstyle).all { checkstyleTask -> checkstyleAll.dependsOn checkstyleTask }
      
      check.dependsOn checkstyleAll
-
-}
-
-subprojects{
-    apply plugin: 'maven-publish'
-    apply plugin: 'com.jfrog.bintray'
-    apply plugin: 'nebula.maven-base-publish'
-    apply plugin: 'nebula.maven-dependencies'
-    apply plugin: 'org.starchartlabs.flare.increase-test-logging'
-    apply plugin: 'org.starchartlabs.flare.source-jars'
-	apply plugin: 'org.starchartlabs.flare.published-project'
 
     //Setup default test behavior, including failure logging
     test {
