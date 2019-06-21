@@ -3,37 +3,27 @@ buildscript {
         maven { url 'https://plugins.gradle.org/m2/' }
     }
     dependencies {
-    	classpath group: 'com.jfrog.bintray.gradle', name: 'gradle-bintray-plugin', version: '1.7.3'
-        classpath group: 'com.netflix.nebula', name: 'nebula-dependency-recommender', version: '4.2.0'
-        classpath group: 'com.netflix.nebula', name: 'nebula-publishing-plugin', version: '4.2.0'
-        classpath group: 'org.starchartlabs.flare', name: 'flare-operations-plugins', version: '1.1.0'
-        classpath group: 'org.starchartlabs.flare', name: 'flare-publishing-plugins', version: '0.3.0'
+    	classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'com.netflix.nebula:nebula-dependency-recommender:4.2.0'
+        classpath 'com.netflix.nebula:nebula-publishing-plugin:4.2.0'
+        classpath 'org.starchartlabs.flare:flare-operations-plugins:2.0.0'
+        classpath 'org.starchartlabs.flare:flare-publishing-plugins:0.3.0'
     }
 }
 
 apply plugin: 'org.starchartlabs.flare.merge-coverage-reports'
 
-mergeCoverageReports {
-    reports {
-        xml.enabled true
-        html.enabled false
-        csv.enabled false
-        
-        xml.destination = "${buildDir}/reports/jacoco/report.xml"
-    }
-}
-
 allprojects{
     apply plugin: 'eclipse'
     apply plugin: 'nebula.dependency-recommender'
     apply plugin: 'nebula.maven-resolved-dependencies'
-    apply plugin: 'org.starchartlabs.flare.dependency-insight'
+    apply plugin: 'org.starchartlabs.flare.dependency-reporting'
 
     dependencyRecommendations {
         propertiesFile file: file("${rootDir}/dependencies.properties")
 	}
 
-    //Always download sources, to allow debugging
+    // Always download sources, to allow debugging
     eclipse {
         classpath {
             downloadSources=true
@@ -70,15 +60,15 @@ subprojects{
      
      check.dependsOn checkstyleAll
 
-    //Setup default test behavior, including failure logging
+    // Setup default test behavior, including failure logging
     test {
         useTestNG() {
             useDefaultListeners = true
         }
     }
     
-    //Apply module naming to all projects
-    //Add LICENSE so it is included in all JARs, as well as dependent licenses, fulfilling the "distributions include license" requirement
+    // Apply module naming to all projects
+    // Add LICENSE so it is included in all JARs, as well as dependent licenses, fulfilling the "distributions include license" requirement
     jar {
 		manifest {
 			attributes("Automatic-Module-Name": "${project.group}.${project.name  - 'alloy-'}".replaceAll("-", "."))
@@ -91,7 +81,7 @@ subprojects{
         from("${rootDir}/dependent-licenses")
 	}
 	
-	//All projects should provide source code and javadoc, and upload these with any released artifacts
+	// All projects should provide source code and javadoc, and upload these with any released artifacts
     sourcesJar {
         from("${rootDir}"){
             include 'LICENSE'
@@ -108,7 +98,7 @@ subprojects{
         from("${rootDir}/dependent-licenses")
 	}
 	
-	//If not a remote run, publish to local only
+	// If not a remote run, publish to local only
     if(!project.hasProperty('remoteDeploy')){
         publishing {
             repositories {
