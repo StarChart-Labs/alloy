@@ -7,7 +7,7 @@ buildscript {
         classpath 'com.netflix.nebula:nebula-dependency-recommender:4.2.0'
         classpath 'com.netflix.nebula:nebula-publishing-plugin:4.2.0'
         classpath 'org.starchartlabs.flare:flare-operations-plugins:2.0.0'
-        classpath 'org.starchartlabs.flare:flare-publishing-plugins:0.3.0'
+        classpath 'org.starchartlabs.flare:flare-publishing-plugins:1.0.0'
     }
 }
 
