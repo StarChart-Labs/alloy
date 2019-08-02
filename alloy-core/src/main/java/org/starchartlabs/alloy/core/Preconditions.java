@@ -83,17 +83,18 @@ public final class Preconditions {
     }
 
     /**
-     * returns a value to the calling method if the predicate is true
+     * Evaluates a value against a provided {@link Predicate} expression
      *
      * @param value
      *            An assignable value to evaluate
      * @param predicate
-     *            A boolean conditional of {@code value}
+     *            An operation to evaluate against {@code value}
      * @param <T>
      *            The type of the value being evaluated
-     * @return {@code value} if predicate is true
+     * @return {@code value} if the provided {@code predicate} evaluates to true
      * @throws IllegalArgumentException
-     *             if {@code predicate} is false
+     *             If {@code predicate} evaluates to false
+     * @since 0.5.0
      */
     public static <T> T checkArgument(@Nullable T value, Predicate<T> predicate) {
         Objects.requireNonNull(predicate);
