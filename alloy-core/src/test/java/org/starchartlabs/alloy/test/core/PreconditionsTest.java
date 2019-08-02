@@ -23,33 +23,30 @@ public class PreconditionsTest {
     public void checkArgumentFalse() throws Exception {
         Preconditions.checkArgument(false);
     }
-    
-    @Test (expectedExceptions = NullPointerException.class)
+
+    @Test(expectedExceptions = NullPointerException.class)
     public void checkArgumentReturnValueStringNull() throws Exception {
         Preconditions.checkArgument("value", null);
     }
-    
-    @Test (expectedExceptions = IllegalArgumentException.class)
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void checkArgumentReturnValueStringFalse() throws Exception {
         Preconditions.checkArgument("value", t -> false);
     }
-    
+
     @Test
     public void checkArgumentReturnValueNullTrue() throws Exception {
         Object result = Preconditions.checkArgument(null, t -> true);
-        
+
         Assert.assertNull(result);
     }
 
     @Test
     public void checkArgumentReturnValueStringTrue() throws Exception {
         String result = Preconditions.checkArgument("value", t -> true);
-        
+
         Assert.assertEquals(result, "value");
     }
-    
-    
-    
 
     @Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "null")
     public void checkArgumentFalseNullMessage() throws Exception {
