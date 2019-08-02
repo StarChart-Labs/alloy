@@ -21,6 +21,7 @@
 package org.starchartlabs.alloy.core;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
@@ -79,6 +80,29 @@ public final class Preconditions {
         if (!expression) {
             throw new IllegalArgumentException();
         }
+    }
+
+    /**
+     * returns a value to the calling method if the predicate is true
+     *
+     * @param value
+     *            An assignable value to evaluate
+     * @param predicate
+     *            A boolean conditional of {@code value}
+     * @param <T>
+     *            The type of the value being evaluated
+     * @return {@code value} if predicate is true
+     * @throws IllegalArgumentException
+     *             if {@code predicate} is false
+     */
+    public static <T> T checkArgument(@Nullable T value, Predicate<T> predicate) {
+        Objects.requireNonNull(predicate);
+
+        if (!predicate.test(value)) {
+            throw new IllegalArgumentException();
+        }
+
+        return value;
     }
 
     /**
