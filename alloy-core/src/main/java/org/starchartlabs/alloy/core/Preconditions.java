@@ -125,6 +125,33 @@ public final class Preconditions {
     }
 
     /**
+     * Evaluates a value against a provided {@link Predicate} expression
+     *
+     * @param value
+     *            An assignable value to evaluate
+     * @param predicate
+     *            An operation to evaluate against {@code value}
+     * @param <T>
+     *            The type of the value being evaluated
+     * @param errorMessage
+     *            The message to provide in the exception, if the check fails; will be converted via
+     *            {@link String#valueOf}
+     * @return {@code value} if the provided {@code predicate} evaluates to true
+     * @throws IllegalArgumentException
+     *             If {@code predicate} evaluates to false
+     * @since 0.5.0
+     */
+    public static <T> T checkArgument(@Nullable T value, Predicate<T> predicate, @Nullable Object errorMessage) {
+        Objects.requireNonNull(predicate);
+
+        if (!predicate.test(value)) {
+            throw new IllegalArgumentException(String.valueOf(errorMessage));
+        }
+
+        return value;
+    }
+
+    /**
      * Ensures the truth of an expression involving one or more parameters to the calling method.
      *
      * <p>
@@ -149,6 +176,38 @@ public final class Preconditions {
     }
 
     /**
+     * Evaluates a value against a provided {@link Predicate} expression
+     *
+     * <p>
+     * Preferred to {@link #checkArgument(Object, Predicate, Object)} when elements needs to be substituted or otherwise
+     * processed for performance reasons
+     *
+     * @param value
+     *            An assignable value to evaluate
+     * @param predicate
+     *            An operation to evaluate against {@code value}
+     * @param <T>
+     *            The type of the value being evaluated
+     * @param errorMessageSupplier
+     *            A supplier for the message to provide in the exception, if the check fails; Will not be invoked if
+     *            {@code predicate} is true
+     * @return {@code value} if the provided {@code predicate} evaluates to true
+     * @throws IllegalArgumentException
+     *             If {@code predicate} evaluates to false
+     * @since 0.5.0
+     */
+    public static <T> T checkArgument(@Nullable T value, Predicate<T> predicate,
+            Supplier<String> errorMessageSupplier) {
+        Objects.requireNonNull(predicate);
+
+        if (!predicate.test(value)) {
+            throw new IllegalArgumentException(String.valueOf(errorMessageSupplier.get()));
+        }
+
+        return value;
+    }
+
+    /**
      * Ensures the truth of an expression involving one or more parameters to the calling method.
      *
      * @param expression
@@ -161,6 +220,30 @@ public final class Preconditions {
         if (!expression) {
             throw new IllegalStateException();
         }
+    }
+
+    /**
+     * Evaluates a value against a provided {@link Predicate} expression
+     *
+     * @param value
+     *            An assignable value to evaluate
+     * @param predicate
+     *            An operation to evaluate against {@code value}
+     * @param <T>
+     *            The type of the value being evaluated
+     * @return {@code value} if the provided {@code predicate} evaluates to true
+     * @throws IllegalStateException
+     *             If {@code predicate} evaluates to false
+     * @since 0.5.0
+     */
+    public static <T> T checkState(@Nullable T value, Predicate<T> predicate) {
+        Objects.requireNonNull(predicate);
+
+        if (!predicate.test(value)) {
+            throw new IllegalStateException();
+        }
+
+        return value;
     }
 
     /**
@@ -179,6 +262,33 @@ public final class Preconditions {
         if (!expression) {
             throw new IllegalStateException(String.valueOf(errorMessage));
         }
+    }
+
+    /**
+     * Evaluates a value against a provided {@link Predicate} expression
+     *
+     * @param value
+     *            An assignable value to evaluate
+     * @param predicate
+     *            An operation to evaluate against {@code value}
+     * @param <T>
+     *            The type of the value being evaluated
+     * @param errorMessage
+     *            The message to provide in the exception, if the check fails; will be converted via
+     *            {@link String#valueOf}
+     * @return {@code value} if the provided {@code predicate} evaluates to true
+     * @throws IllegalStateException
+     *             If {@code predicate} evaluates to false
+     * @since 0.5.0
+     */
+    public static <T> T checkState(@Nullable T value, Predicate<T> predicate, @Nullable Object errorMessage) {
+        Objects.requireNonNull(predicate);
+
+        if (!predicate.test(value)) {
+            throw new IllegalStateException(String.valueOf(errorMessage));
+        }
+
+        return value;
     }
 
     /**
@@ -203,6 +313,37 @@ public final class Preconditions {
         if (!expression) {
             throw new IllegalStateException(String.valueOf(errorMessageSupplier.get()));
         }
+    }
+
+    /**
+     * Evaluates a value against a provided {@link Predicate} expression
+     *
+     * <p>
+     * Preferred to {@link #checkArgument(Object, Predicate, Object)} when elements needs to be substituted or otherwise
+     * processed for performance reasons
+     *
+     * @param value
+     *            An assignable value to evaluate
+     * @param predicate
+     *            An operation to evaluate against {@code value}
+     * @param <T>
+     *            The type of the value being evaluated
+     * @param errorMessageSupplier
+     *            A supplier for the message to provide in the exception, if the check fails; Will not be invoked if
+     *            {@code predicate} is true
+     * @return {@code value} if the provided {@code predicate} evaluates to true
+     * @throws IllegalStateException
+     *             If {@code predicate} evaluates to false
+     * @since 0.5.0
+     */
+    public static <T> T checkState(@Nullable T value, Predicate<T> predicate, Supplier<String> errorMessageSupplier) {
+        Objects.requireNonNull(predicate);
+
+        if (!predicate.test(value)) {
+            throw new IllegalStateException(String.valueOf(errorMessageSupplier.get()));
+        }
+
+        return value;
     }
 
 }
