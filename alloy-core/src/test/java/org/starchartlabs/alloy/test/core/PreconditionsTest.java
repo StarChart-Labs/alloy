@@ -113,12 +113,17 @@ public class PreconditionsTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void checkArgumentReturnValueStringNullSupplier() throws Exception {
+    public void checkArgumentReturnValueStringNullPredicateSupplier() throws Exception {
         Preconditions.checkArgument("value", null, () -> "message");
     }
 
+    @Test(expectedExceptions = NullPointerException.class)
+    public void checkArgumentReturnValueStringNullSupplier() throws Exception {
+        Preconditions.checkArgument("value", t -> false, null);
+    }
+
     @Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "null")
-    public void checkArgumentReturnValueStringFalseSupplierNullMessage() throws Exception {
+    public void checkArgumentReturnValueStringFalseNullMessageSupplier() throws Exception {
         Preconditions.checkArgument("value", t -> false, () -> null);
     }
 
@@ -240,8 +245,13 @@ public class PreconditionsTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void checkStateReturnValueStringNullSupplier() throws Exception {
+    public void checkStateReturnValueStringNullPredicateSupplier() throws Exception {
         Preconditions.checkState("value", null, () -> "message");
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void checkStateReturnValueStringNullSupplier() throws Exception {
+        Preconditions.checkState("value", t -> false, null);
     }
 
     @Test(expectedExceptions = IllegalStateException.class, expectedExceptionsMessageRegExp = "null")

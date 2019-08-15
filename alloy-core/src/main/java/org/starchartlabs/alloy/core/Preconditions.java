@@ -131,11 +131,11 @@ public final class Preconditions {
      *            An assignable value to evaluate
      * @param predicate
      *            An operation to evaluate against {@code value}
-     * @param <T>
-     *            The type of the value being evaluated
      * @param errorMessage
      *            The message to provide in the exception, if the check fails; will be converted via
      *            {@link String#valueOf}
+     * @param <T>
+     *            The type of the value being evaluated
      * @return {@code value} if the provided {@code predicate} evaluates to true
      * @throws IllegalArgumentException
      *             If {@code predicate} evaluates to false
@@ -186,11 +186,11 @@ public final class Preconditions {
      *            An assignable value to evaluate
      * @param predicate
      *            An operation to evaluate against {@code value}
-     * @param <T>
-     *            The type of the value being evaluated
      * @param errorMessageSupplier
      *            A supplier for the message to provide in the exception, if the check fails; Will not be invoked if
      *            {@code predicate} is true
+     * @param <T>
+     *            The type of the value being evaluated
      * @return {@code value} if the provided {@code predicate} evaluates to true
      * @throws IllegalArgumentException
      *             If {@code predicate} evaluates to false
@@ -271,11 +271,11 @@ public final class Preconditions {
      *            An assignable value to evaluate
      * @param predicate
      *            An operation to evaluate against {@code value}
-     * @param <T>
-     *            The type of the value being evaluated
      * @param errorMessage
      *            The message to provide in the exception, if the check fails; will be converted via
      *            {@link String#valueOf}
+     * @param <T>
+     *            The type of the value being evaluated
      * @return {@code value} if the provided {@code predicate} evaluates to true
      * @throws IllegalStateException
      *             If {@code predicate} evaluates to false
@@ -326,11 +326,11 @@ public final class Preconditions {
      *            An assignable value to evaluate
      * @param predicate
      *            An operation to evaluate against {@code value}
-     * @param <T>
-     *            The type of the value being evaluated
      * @param errorMessageSupplier
      *            A supplier for the message to provide in the exception, if the check fails; Will not be invoked if
      *            {@code predicate} is true
+     * @param <T>
+     *            The type of the value being evaluated
      * @return {@code value} if the provided {@code predicate} evaluates to true
      * @throws IllegalStateException
      *             If {@code predicate} evaluates to false
