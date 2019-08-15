@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 - Fixed modifier order issue in org.starchartlabs.alloy.core.Comparators
+- Added org.starchartlabs.alloy.core.Preconditions.checkArgument and checkState that supports value assignment
 
 ## [0.4.1]
 ### Changed
