@@ -4,6 +4,6 @@ description = 'Basic utilities to streamline common Java operations'
 dependencies {
 	compileOnly 'com.google.code.findbugs:jsr305'
 	
-	testCompile 'org.testng:testng'
-    testCompile 'org.mockito:mockito-core'
+	testImplementation 'org.testng:testng'
+    testImplementation 'org.mockito:mockito-core'
 }

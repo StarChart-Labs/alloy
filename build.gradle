@@ -1,27 +1,20 @@
 buildscript {
     repositories {
         maven { url 'https://plugins.gradle.org/m2/' }
+        jcenter()
+        mavenLocal()
     }
     dependencies {
     	classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
-        classpath 'com.netflix.nebula:nebula-dependency-recommender:4.2.0'
-        classpath 'com.netflix.nebula:nebula-publishing-plugin:4.2.0'
-        classpath 'org.starchartlabs.flare:flare-operations-plugins:2.0.0'
-        classpath 'org.starchartlabs.flare:flare-publishing-plugins:1.0.0'
     }
 }
 
-apply plugin: 'org.starchartlabs.flare.merge-coverage-reports'
+plugins {
+    id 'org.starchartlabs.flare.multi-module-library' version '0.2.0'
+}
 
-allprojects{
+allprojects {
     apply plugin: 'eclipse'
-    apply plugin: 'nebula.dependency-recommender'
-    apply plugin: 'nebula.maven-resolved-dependencies'
-    apply plugin: 'org.starchartlabs.flare.dependency-reporting'
-
-    dependencyRecommendations {
-        propertiesFile file: file("${rootDir}/dependencies.properties")
-	}
 
     // Always download sources, to allow debugging
     eclipse {
@@ -33,32 +26,36 @@ allprojects{
     repositories {
         mavenCentral()
     }
-
 }
 
-subprojects{
-    apply plugin: 'java'
+subprojects {
+    apply plugin: 'java-library'
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
     apply plugin: 'maven-publish'
     apply plugin: 'com.jfrog.bintray'
-    apply plugin: 'nebula.maven-base-publish'
-    apply plugin: 'nebula.maven-dependencies'
-    apply plugin: 'org.starchartlabs.flare.increase-test-logging'
-    apply plugin: 'org.starchartlabs.flare.source-jars'
-	apply plugin: 'org.starchartlabs.flare.published-project'
     
+    projectMetaData {
+        github {
+            repository 'StarChart-Labs', 'alloy'
+        }
+        
+        licenses {
+            mit()
+        }
+    }
+
     checkstyle {
         configFile = rootProject.file('config/checkstyle/checkstyle.xml')
         configProperties = [ 'checkstyle.config.dir' : rootProject.file('config/checkstyle') ]
         toolVersion = '8.18'
-     }
+    }
      
-     task checkstyleAll{}
+    task checkstyleAll{}
      
-     tasks.withType(Checkstyle).all { checkstyleTask -> checkstyleAll.dependsOn checkstyleTask }
+    tasks.withType(Checkstyle).all { checkstyleTask -> checkstyleAll.dependsOn checkstyleTask }
      
-     check.dependsOn checkstyleAll
+    check.dependsOn checkstyleAll
 
     // Setup default test behavior, including failure logging
     test {
@@ -73,32 +70,25 @@ subprojects{
 		manifest {
 			attributes("Automatic-Module-Name": "${project.group}.${project.name  - 'alloy-'}".replaceAll("-", "."))
 		}
-		
-		from("${rootDir}"){
-            include 'LICENSE'
-        }
-        
-        from("${rootDir}/dependent-licenses")
 	}
-	
-	// All projects should provide source code and javadoc, and upload these with any released artifacts
-    sourcesJar {
+    
+    tasks.withType(Jar).all {
         from("${rootDir}"){
             include 'LICENSE'
         }
         
         from("${rootDir}/dependent-licenses")
     }
-
-    javadocJar{
-        from("${rootDir}"){
-            include 'LICENSE'
-        }
-        
-        from("${rootDir}/dependent-licenses")
-	}
 	
-	// If not a remote run, publish to local only
+	publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+    
+    // If not a remote run, publish to local only
     if(!project.hasProperty('remoteDeploy')){
         publishing {
             repositories {
@@ -106,27 +96,9 @@ subprojects{
             }
         }
     }
-    
-    publishedInfo{
-        url = 'https://github.com/StarChart-Labs/alloy'
-      
-        scm{
-        	github 'StarChart-Labs', 'alloy'
-        }
-      
-        licenses{
-          	mit('repo')
-        }
-      
-        developers{
-          	github 'romeara', 'Ryan OMeara'
-        }
-    }
 
     bintray {
-        user = System.getProperty('bintray_user')
-        key = System.getProperty('bintray_key')
-        publications = [ 'nebula' ]
+        publications = [ 'maven' ]
 
         if(!project.hasProperty('remoteDeploy')){
             dryRun = true
@@ -137,7 +109,7 @@ subprojects{
             name = "${project.name}"
             userOrg = 'starchart-labs'
             licenses = ['MIT']
-            vcsUrl = 'https://github.com/StarChart-Labs/alloy'
+            vcsUrl = "${projectMetaData.scm.vcsUrl}"
 
             version {
                 name = "${project.version}"
@@ -151,5 +123,13 @@ subprojects{
             }
         }
 	}
-
+    
+    bintrayUpload {
+        doFirst {
+            project.bintray {
+                user = "${credentials.bintray.username}"
+                key = "${credentials.bintray.password}"
+            }
+        }
+    }
 }
