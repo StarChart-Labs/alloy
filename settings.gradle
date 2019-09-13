@@ -1,1 +1,3 @@
+rootProject.name = 'alloy'
+
 include 'alloy-core'
