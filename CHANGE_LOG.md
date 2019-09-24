@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Fixed modifier order issue in org.starchartlabs.alloy.core.Comparators
 - Added org.starchartlabs.alloy.core.Preconditions.checkArgument and checkState that supports value assignment
+- (GH-57) Added integrated support for Preconditions with formatted messages
 
 ## [0.4.1]
 ### Changed

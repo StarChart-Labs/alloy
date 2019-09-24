@@ -114,7 +114,7 @@ Alloy's version of ToStringBuilder does not currently overload `add` or `addValu
 ### Updated APIs
 
 - Guava Preconditions.checkArgument with message formatting
-  - Instead of the large number of Guava methods for built-in message formatting, Alloy separates out the formatting concerns using Java's Supplier via Alloy Preconditions.checkArgument(boolean, Supplier<String>). Alloy also supplies Strings.format, which replicate's Guava's Preconditions formatting behavior and performance characteristics, and can be used via lambda as a supplier
+  - Instead of the large number of Guava methods for built-in message formatting, Alloy separates out the formatting concerns using Preconditions.checkArgument(boolean, String, Object...)
   - Affected Guava Preconditions.checkArgument methods:
     - Preconditions.checkArgument(boolean, String, Object...)
     - Preconditions.checkArgument(boolean, String, char)
@@ -141,7 +141,7 @@ Alloy's version of ToStringBuilder does not currently overload `add` or `addValu
     - Preconditions.checkArgument(boolean, String, Object, Object, Object, Object)
 
 - Guava Preconditions.checkState with message formatting
-  - Instead of the large number of Guava methods for built-in message formatting, Alloy separates out the formatting concerns using Java's Supplier via Alloy Preconditions.checkState(boolean, Supplier<String>). Alloy also supplies Strings.format, which replicate's Guava's Preconditions formatting behavior and performance characteristics, and can be used via lambda as a supplier
+  - Instead of the large number of Guava methods for built-in message formatting, Alloy separates out the formatting concerns using Java's Supplier via Alloy Preconditions.checkState(boolean, String, Object...)
   - Affected Guava Preconditions.checkState methods:
     - Preconditions.checkState(boolean, String, Object...)
     - Preconditions.checkState(boolean, String, char)

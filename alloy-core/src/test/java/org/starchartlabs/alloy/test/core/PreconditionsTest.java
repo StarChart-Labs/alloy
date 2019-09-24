@@ -147,6 +147,40 @@ public class PreconditionsTest {
     }
 
     @Test
+    public void checkArgumentTrueFormattedString() throws Exception {
+        Preconditions.checkArgument(true, "%s", "message");
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "message")
+    public void checkArgumentFalseFormattedString() throws Exception {
+        Preconditions.checkArgument(false, "%s", "message");
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void checkArgumentReturnValueStringNullPredicateFormattedString() throws Exception {
+        Preconditions.checkArgument("value", null, "%s", "message");
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "message")
+    public void checkArgumentReturnValueStringFalseFormattedString() throws Exception {
+        Preconditions.checkArgument("value", t -> false, "%s", "message");
+    }
+
+    @Test
+    public void checkArgumentReturnValueNullTrueFormattedString() throws Exception {
+        Object result = Preconditions.checkArgument(null, t -> true, "%s", "message");
+
+        Assert.assertNull(result);
+    }
+
+    @Test
+    public void checkArgumentReturnValueStringTrueFormattedString() throws Exception {
+        Object result = Preconditions.checkArgument("value", t -> true, "%s", "message");
+
+        Assert.assertEquals(result, "value");
+    }
+
+    @Test
     public void checkStateTrue() throws Exception {
         Preconditions.checkState(true);
     }
@@ -274,6 +308,40 @@ public class PreconditionsTest {
     @Test
     public void checkStateReturnValueStringTrueSupplier() throws Exception {
         Object result = Preconditions.checkState("value", t -> true, () -> "message");
+
+        Assert.assertEquals(result, "value");
+    }
+
+    @Test
+    public void checkStateTrueFormattedString() throws Exception {
+        Preconditions.checkState(true, "%s", "message");
+    }
+
+    @Test(expectedExceptions = IllegalStateException.class, expectedExceptionsMessageRegExp = "message")
+    public void checkStateFalseFormattedString() throws Exception {
+        Preconditions.checkState(false, "%s", "message");
+    }
+
+    @Test(expectedExceptions = NullPointerException.class)
+    public void checkStateReturnValueStringNullPredicateFormattedString() throws Exception {
+        Preconditions.checkState("value", null, "%s", "message");
+    }
+
+    @Test(expectedExceptions = IllegalStateException.class, expectedExceptionsMessageRegExp = "message")
+    public void checkStateReturnValueStringFalseFormattedString() throws Exception {
+        Preconditions.checkState("value", t -> false, "%s", "message");
+    }
+
+    @Test
+    public void checkStateReturnValueNullTrueFormattedString() throws Exception {
+        Object result = Preconditions.checkState(null, t -> true, "%s", "message");
+
+        Assert.assertNull(result);
+    }
+
+    @Test
+    public void checkStateReturnValueStringTrueFormattedString() throws Exception {
+        Object result = Preconditions.checkState("value", t -> true, "%s", "message");
 
         Assert.assertEquals(result, "value");
     }

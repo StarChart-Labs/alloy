@@ -199,9 +199,74 @@ public final class Preconditions {
     public static <T> T checkArgument(@Nullable T value, Predicate<T> predicate,
             Supplier<String> errorMessageSupplier) {
         Objects.requireNonNull(predicate);
+        Objects.requireNonNull(errorMessageSupplier);
 
         if (!predicate.test(value)) {
             throw new IllegalArgumentException(String.valueOf(errorMessageSupplier.get()));
+        }
+
+        return value;
+    }
+
+    /**
+     * Ensures the truth of an expression involving one or more parameters to the calling method.
+     *
+     * <p>
+     * Preferred to {@link #checkArgument(boolean, Object)} when elements needs to be substituted or otherwise processed
+     * for performance reasons
+     *
+     * @param expression
+     *            A boolean expression
+     * @param template
+     *            A template for a formatted message. The message is formed by replacing each {@code %s} placeholder in
+     *            the template with an argument. These are matched by position - the first {@code %s} gets
+     *            {@code args[0]}, etc. Unmatched arguments will be appended to the formatted message in square braces.
+     *            Unmatched placeholders will be left as-is.
+     * @param args
+     *            The arguments to be substituted into the message template. Arguments are converted to strings using
+     *            {@link String#valueOf(Object)}.
+     * @throws IllegalArgumentException
+     *             If {@code expression} is false
+     * @since 0.1.0
+     */
+    public static void checkArgument(boolean expression, @Nullable String template, @Nullable Object... args) {
+        if (!expression) {
+            throw new IllegalArgumentException(String.valueOf(Strings.format(template, args)));
+        }
+    }
+
+    /**
+     * Evaluates a value against a provided {@link Predicate} expression
+     *
+     * <p>
+     * Preferred to {@link #checkArgument(Object, Predicate, Object)} when elements needs to be substituted or otherwise
+     * processed for performance reasons
+     *
+     * @param value
+     *            An assignable value to evaluate
+     * @param predicate
+     *            An operation to evaluate against {@code value}
+     * @param template
+     *            A template for a formatted message. The message is formed by replacing each {@code %s} placeholder in
+     *            the template with an argument. These are matched by position - the first {@code %s} gets
+     *            {@code args[0]}, etc. Unmatched arguments will be appended to the formatted message in square braces.
+     *            Unmatched placeholders will be left as-is.
+     * @param args
+     *            The arguments to be substituted into the message template. Arguments are converted to strings using
+     *            {@link String#valueOf(Object)}.
+     * @param <T>
+     *            The type of the value being evaluated
+     * @return {@code value} if the provided {@code predicate} evaluates to true
+     * @throws IllegalArgumentException
+     *             If {@code predicate} evaluates to false
+     * @since 0.5.0
+     */
+    public static <T> T checkArgument(@Nullable T value, Predicate<T> predicate,
+            @Nullable String template, @Nullable Object... args) {
+        Objects.requireNonNull(predicate);
+
+        if (!predicate.test(value)) {
+            throw new IllegalArgumentException(Strings.format(template, args));
         }
 
         return value;
@@ -307,7 +372,7 @@ public final class Preconditions {
      *             If {@code expression} is false
      * @since 0.1.0
      */
-    public static void checkState(boolean expression, @Nullable Supplier<String> errorMessageSupplier) {
+    public static void checkState(boolean expression, Supplier<String> errorMessageSupplier) {
         Objects.requireNonNull(errorMessageSupplier);
 
         if (!expression) {
@@ -338,9 +403,74 @@ public final class Preconditions {
      */
     public static <T> T checkState(@Nullable T value, Predicate<T> predicate, Supplier<String> errorMessageSupplier) {
         Objects.requireNonNull(predicate);
+        Objects.requireNonNull(errorMessageSupplier);
 
         if (!predicate.test(value)) {
             throw new IllegalStateException(String.valueOf(errorMessageSupplier.get()));
+        }
+
+        return value;
+    }
+
+    /**
+     * Ensures the truth of an expression involving one or more parameters to the calling method.
+     *
+     * <p>
+     * Preferred to {@link #checkState(boolean, Object)} when elements needs to be substituted or otherwise processed
+     * for performance reasons
+     *
+     * @param expression
+     *            A boolean expression
+     * @param template
+     *            A template for a formatted message. The message is formed by replacing each {@code %s} placeholder in
+     *            the template with an argument. These are matched by position - the first {@code %s} gets
+     *            {@code args[0]}, etc. Unmatched arguments will be appended to the formatted message in square braces.
+     *            Unmatched placeholders will be left as-is.
+     * @param args
+     *            The arguments to be substituted into the message template. Arguments are converted to strings using
+     *            {@link String#valueOf(Object)}.
+     * @throws IllegalStateException
+     *             If {@code expression} is false
+     * @since 0.5.0
+     */
+    public static void checkState(boolean expression, @Nullable String template, @Nullable Object... args) {
+        if (!expression) {
+            throw new IllegalStateException(Strings.format(template, args));
+        }
+    }
+
+    /**
+     * Evaluates a value against a provided {@link Predicate} expression
+     *
+     * <p>
+     * Preferred to {@link #checkArgument(Object, Predicate, Object)} when elements needs to be substituted or otherwise
+     * processed for performance reasons
+     *
+     * @param value
+     *            An assignable value to evaluate
+     * @param predicate
+     *            An operation to evaluate against {@code value}
+     * @param template
+     *            A template for a formatted message. The message is formed by replacing each {@code %s} placeholder in
+     *            the template with an argument. These are matched by position - the first {@code %s} gets
+     *            {@code args[0]}, etc. Unmatched arguments will be appended to the formatted message in square braces.
+     *            Unmatched placeholders will be left as-is.
+     * @param args
+     *            The arguments to be substituted into the message template. Arguments are converted to strings using
+     *            {@link String#valueOf(Object)}.
+     * @param <T>
+     *            The type of the value being evaluated
+     * @return {@code value} if the provided {@code predicate} evaluates to true
+     * @throws IllegalStateException
+     *             If {@code predicate} evaluates to false
+     * @since 0.5.0
+     */
+    public static <T> T checkState(@Nullable T value, Predicate<T> predicate, @Nullable String template,
+            @Nullable Object... args) {
+        Objects.requireNonNull(predicate);
+
+        if (!predicate.test(value)) {
+            throw new IllegalStateException(Strings.format(template, args));
         }
 
         return value;

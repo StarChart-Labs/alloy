@@ -175,7 +175,7 @@ public final class Strings {
      */
     public static String repeat(String string, int count) {
         Objects.requireNonNull(string);
-        Preconditions.checkArgument(count >= 0, () -> format("Invalid count: %s", count));
+        checkArgument(count >= 0, "Invalid count: %s", count);
 
         String result = "";
 
@@ -327,5 +327,30 @@ public final class Strings {
                 && index <= (string.length() - 2)
                 && Character.isHighSurrogate(string.charAt(index))
                 && Character.isLowSurrogate(string.charAt(index + 1));
+    }
+
+    /**
+     * Ensures the truth of an expression involving one or more parameters to the calling method.
+     *
+     * <p>
+     * Preferred to {@link #checkArgument(boolean, Object)} when elements needs to be substituted or otherwise processed
+     * for performance reasons
+     *
+     * <p>
+     * Duplicated from Preconditions to allow Preconditions to natively use Strings methods, such as {@code format},
+     * without creating a circular dependency
+     *
+     * @param expression
+     *            A boolean expression
+     * @param errorMessageSupplier
+     *            A supplier for the message to provide in the exception, if the check fails; Will not be invoked if
+     *            {@code expression} is true
+     * @throws IllegalArgumentException
+     *             If {@code expression} is false
+     */
+    private static void checkArgument(boolean expression, @Nullable String template, @Nullable Object... args) {
+        if (!expression) {
+            throw new IllegalArgumentException(format(template, args));
+        }
     }
 }
