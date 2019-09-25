@@ -86,6 +86,16 @@ subprojects {
         }
     }
     
+    // TODO romeara Workaround to lack of defaults on published POM for name and description
+    project.afterEvaluate { p ->
+        publishing.publications.withType(MavenPublication.class).all { publication -> 
+            publication.pom {
+                name = "${project.name}"
+                description = "${project.description}"
+            }
+        }
+    }
+    
     // If not a remote run, publish to local only
     if(!project.hasProperty('remoteDeploy')){
         publishing {
@@ -124,10 +134,8 @@ subprojects {
     
     bintrayUpload {
         doFirst {
-            project.bintray {
-                user = "${credentials.bintray.username}"
-                key = "${credentials.bintray.password}"
-            }
+            user = "${credentials.bintray.username}"
+            apiKey = "${credentials.bintray.password}"
         }
     }
 }
