@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.5.0]
 ### Changed
 - Fixed modifier order issue in org.starchartlabs.alloy.core.Comparators
 - Added org.starchartlabs.alloy.core.Preconditions.checkArgument and checkState that supports value assignment
