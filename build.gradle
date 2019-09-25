@@ -86,7 +86,7 @@ subprojects {
         }
     }
     
-    // TODO romeara Workaround to lack of defaults on published POM for name and description
+    // TODO romeara Workaround to lack of defaults on published POM for name and description, until added in flare-plugins
     project.afterEvaluate { p ->
         publishing.publications.withType(MavenPublication.class).all { publication -> 
             publication.pom {
@@ -132,6 +132,7 @@ subprojects {
         }
 	}
     
+    // TODO romeara workaround until deferred credential reading is available in flare-plugins
     bintrayUpload {
         doFirst {
             user = "${credentials.bintray.username}"
