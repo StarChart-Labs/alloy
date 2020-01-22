@@ -8,7 +8,7 @@ buildscript {
 }
 
 plugins {
-    id 'org.starchartlabs.flare.multi-module-library' version '0.2.1'
+    id 'org.starchartlabs.flare.multi-module-library' version '1.0.0'
 }
 
 allprojects {
@@ -82,16 +82,6 @@ subprojects {
         publications {
             maven(MavenPublication) {
                 from components.java
-            }
-        }
-    }
-    
-    // TODO romeara Workaround to lack of defaults on published POM for name and description, until added in flare-plugins
-    project.afterEvaluate { p ->
-        publishing.publications.withType(MavenPublication.class).all { publication -> 
-            publication.pom {
-                name = "${project.name}"
-                description = "${project.description}"
             }
         }
     }
