@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 - Updated TestNG and Mockito Libraries to next major revision
+- (GH-32) Make `org.starchartlabs.alloy.core.MoreObjects` final
 
 ## [0.5.0]
 ### Changed

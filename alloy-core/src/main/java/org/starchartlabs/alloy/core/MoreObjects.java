@@ -34,7 +34,14 @@ import javax.annotation.Nullable;
  * @author romeara
  * @since 0.1.0
  */
-public class MoreObjects {
+public final class MoreObjects {
+
+    /**
+     * Prevent instantiation of utility class
+     */
+    private MoreObjects() throws InstantiationException {
+        throw new InstantiationException("Cannot instantiate instance of utility class '" + getClass().getName() + "'");
+    }
 
     /**
      * Creates an instance of {@link ToStringHelper}.
