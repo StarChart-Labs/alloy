@@ -12,6 +12,8 @@ General Java utilities and quality of life tools
 
 Alloy is intended to help streamline use of common Java patterns, and reduce boilerplate code
 
+For information on migrating between major versions of Alloy, see the [migration guide](./docs/MIGRATION.md)
+
 ## Contributing
 
 Information for how to contribute to Alloy can be found in [the contribution guidelines](./docs/CONTRIBUTING.md)
