@@ -1,14 +1,8 @@
-buildscript {
-    repositories {
-        maven { url 'https://plugins.gradle.org/m2/' }
-    }
-    dependencies {
-    	classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
-    }
-}
-
 plugins {
     id 'org.starchartlabs.flare.multi-module-library' version '1.0.0'
+    
+    // Plug-ins not applied at the root level, but used in sub-projects
+    id 'com.jfrog.bintray' version '1.8.4' apply false
 }
 
 allprojects {
@@ -17,7 +11,7 @@ allprojects {
     // Always download sources, to allow debugging
     eclipse {
         classpath {
-            downloadSources=true
+            downloadSources = true
         }
     }
 
