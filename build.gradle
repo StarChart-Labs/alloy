@@ -3,7 +3,7 @@ plugins {
     id 'com.autonomousapps.dependency-analysis' version '0.46.0'
     
     // Plug-ins not applied at the root level, but used in sub-projects
-    id 'com.jfrog.bintray' version '1.8.4' apply false
+    id 'com.jfrog.bintray' version '1.8.5' apply false
 }
 
 allprojects {
