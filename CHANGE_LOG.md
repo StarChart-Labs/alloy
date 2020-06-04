@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.0.0]
 ### Changed
 - Updated TestNG and Mockito Libraries to next major revision
 - (GH-32) Make `org.starchartlabs.alloy.core.MoreObjects` final
