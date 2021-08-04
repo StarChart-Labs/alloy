@@ -13,6 +13,6 @@
 * Verify artifacts are present on Maven central in the [Staging repositories](https://oss.sonatype.org/#stagingRepositories) (login required), "close" it, and then "release" it
 * Change version number to `<released version> + 1 micro` + `-SNAPSHOT`
 * Commit to git
-* Push changes and tag to GitHub
-* Create a release on GitHub including all binary and source jars
+* Push changes to GitHub
+* Create a release on GitHub
 * Change the `next-release` milestone to the released version number, move any unresolved tickets/pull-requests to a new `next-release` milestone, and close the version'd milestone
