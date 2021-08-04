@@ -10,7 +10,7 @@
 * Tag the git repository with the fully-qualified semantic version number
 * Push changes and tag to GitHub
 * Run the "Publish" GitHub Actions workflow
-* Verify artifacts are present on Maven central
+* Verify artifacts are present on Maven central in the [Staging repositories](https://oss.sonatype.org/#stagingRepositories) (login required), "close" it, and then "release" it
 * Change version number to `<released version> + 1 micro` + `-SNAPSHOT`
 * Commit to git
 * Push changes and tag to GitHub
