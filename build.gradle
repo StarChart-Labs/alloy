@@ -1,9 +1,6 @@
 plugins {
     id 'org.starchartlabs.flare.multi-module-library' version '1.0.0'
     id 'com.autonomousapps.dependency-analysis' version '0.46.0'
-    
-    // Plug-ins not applied at the root level, but used in sub-projects
-    id 'com.jfrog.bintray' version '1.8.5' apply false
 }
 
 allprojects {
@@ -28,7 +25,7 @@ subprojects {
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
     apply plugin: 'maven-publish'
-    apply plugin: 'com.jfrog.bintray'
+    apply plugin: 'signing'
     
     projectMetaData {
         github {
@@ -74,13 +71,41 @@ subprojects {
         
         from("${rootDir}/dependent-licenses")
     }
-	
+
 	publishing {
         publications {
             maven(MavenPublication) {
                 from components.java
+                
+                repositories {
+                    // If not a remote run, publish to local only
+                    if(!project.hasProperty('remoteDeploy')){
+                        mavenLocal()
+                    }else{
+                        maven {
+                            if(!version.endsWith("SNAPSHOT")){
+                                url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                            }else{
+                                url "https://oss.sonatype.org/content/repositories/snapshots/"
+                            }
+                            
+                            credentials {
+                                username System.getenv("OSSRH_USERNAME")
+                                password System.getenv("OSSRH_PASSWORD")
+                            }
+                        }
+                    }
+                }
             }
         }
+    }
+    
+    signing {
+        required { project.hasProperty('remoteDeploy') || project.hasProperty('sign') }
+        
+        useInMemoryPgpKeys(System.getenv("OSSRH_SIGNING_KEY"), System.getenv("OSSRH_SIGNING_PASSWORD"))
+    
+        sign publishing.publications.maven
     }
     
     // If not a remote run, publish to local only
@@ -91,39 +116,7 @@ subprojects {
             }
         }
     }
-
-    bintray {
-        publications = [ 'maven' ]
-
-        if(!project.hasProperty('remoteDeploy')){
-            dryRun = true
-        }
-
-        pkg {
-            repo = 'alloy'
-            name = "${project.name}"
-            userOrg = 'starchart-labs'
-            licenses = ['MIT']
-            vcsUrl = "${projectMetaData.scm.vcsUrl}"
-
-            version {
-                name = "${project.version}"
-                desc = "${project.name} release ${project.version} final"
-                released  = new Date()
-                vcsTag = "${project.version}"
-
-                gpg {
-                    sign = true
-                }
-            }
-        }
-	}
     
-    // TODO romeara workaround until deferred credential reading is available in flare-plugins
-    bintrayUpload {
-        doFirst {
-            user = "${credentials.bintray.username}"
-            apiKey = "${credentials.bintray.password}"
-        }
-    }
 }
+
+
