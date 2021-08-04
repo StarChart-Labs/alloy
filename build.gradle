@@ -82,17 +82,17 @@ subprojects {
                     if(!project.hasProperty('remoteDeploy')){
                         mavenLocal()
                         
-                        project.logger.lifescyle('Configured for local publishing')
+                        project.logger.lifecycle('Configured for local publishing')
                     }else{
                         maven {
                             if(!version.endsWith("SNAPSHOT")){
                                 url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
                                 
-                                project.logger.lifescyle('Configured for release publishing')
+                                project.logger.lifecycle('Configured for release publishing')
                             }else{
                                 url "https://oss.sonatype.org/content/repositories/snapshots/"
                                 
-                                project.logger.lifescyle('Configured for snapshot publishing')
+                                project.logger.lifecycle('Configured for snapshot publishing')
                             }
                             
                             credentials {
