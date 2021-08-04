@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.0.1]
 ### Changed
 - Updated Mockito to 3.9.0
 - Updated TestNG to 7.4.0
