@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Updated `org.mockito:mockito-core` from `4.1.0` to `4.5.1`
+- Updated `org.testng:testng` from `7.4.0` to `7.5`
 
 ## [1.0.2]
 ### Changed
