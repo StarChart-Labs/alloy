@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 - Updated `org.mockito:mockito-core` from `4.1.0` to `4.8.0`
-- Updated `org.testng:testng` from `7.4.0` to `7.6.1`
+- Updated `org.testng:testng` from `7.4.0` to `7.5`
 
 ## [1.0.2]
 ### Changed
