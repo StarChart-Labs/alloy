@@ -1,5 +1,5 @@
 plugins {
-    id 'org.starchartlabs.flare.multi-module-library' version '1.0.0'
+    id 'org.starchartlabs.flare.multi-module-library' version '2.0.0'
     id 'com.autonomousapps.dependency-analysis' version '0.46.0'
 }
 
@@ -20,12 +20,17 @@ allprojects {
     check.dependsOn buildHealth
 }
 
-subprojects {
+// Exclude the platform project from generalized setup
+configure(subprojects.findAll { it.name != 'gradle-platform' }) {
     apply plugin: 'java-library'
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
     apply plugin: 'maven-publish'
     apply plugin: 'signing'
+    
+    dependencies {
+        implementation platform(project(':gradle-platform'))
+    }
     
     projectMetaData {
         github {

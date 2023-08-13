@@ -1,3 +1,5 @@
 rootProject.name = 'alloy'
 
 include 'alloy-core'
+
+include 'gradle-platform'
