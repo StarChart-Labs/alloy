@@ -1,0 +1,13 @@
+plugins {
+    id 'java-platform'
+}
+
+dependencies {
+    constraints {
+        api 'com.google.code.findbugs:jsr305:3.0.2'
+        
+        api 'org.mockito:mockito-core:4.8.0'
+
+        api 'org.testng:testng:7.5'
+    }
+}
